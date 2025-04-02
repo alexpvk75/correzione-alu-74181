@@ -90,7 +90,7 @@ int main() {
                                                             x28 = porta_and(x1, x18);
                                                             x29 = porta_and_3(x1, x19, Cn);
                                                             x30 = porta_not(x20);
-                                                            
+                                                            x31 = porta_and();
                                                         } else {
                                                             printf("[!] ERRORE: Gli input devono essere obbligatoriamente 0 o 1.\n");
                                                         }
