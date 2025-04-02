@@ -78,19 +78,24 @@ int main() {
                                                             x16 = porta_and_3(x5, S2, S3);
                                                             x17 = porta_and_3(A3, B3, S3);
                                                             x18 = porta_or_3(A0, x6, x7);
-                                                            x19 = porta_or(x8, x9);
-                                                            x20 = porta_or_3(A1, x10, x11);
-                                                            x21 = porta_or(x12, x13);
-                                                            x22 = porta_or_3(A2, x14, x15);
-                                                            x23 = porta_or(x12, x13);
-                                                            x24 = porta_or_3(A3, x14, x15);
-                                                            x25 = porta_or(x16, x17);
-                                                            x26 = porta_and(Cn, x1);
-                                                            x27 = porta_not(x18);
-                                                            x28 = porta_and(x1, x18);
-                                                            x29 = porta_and_3(x1, x19, Cn);
-                                                            x30 = porta_not(x20);
-                                                            x31 = porta_and();
+                                                            x19 = porta_not(x18);
+                                                            x20 = porta_or(x8, x9);
+                                                            x21 = porta_not(x20);
+                                                            x22 = porta_or_3(A1, x10, x11);
+                                                            x23 = porta_not(x22);
+                                                            x24 = porta_or(x12, x13);
+                                                            x25 = porta_not(x24);
+                                                            x26 = porta_or_3(A2, x14, x15);
+                                                            x27 = porta_not(x26);
+                                                            x28 = porta_or(x12, x13);
+                                                            x29 = porta_not(x28);
+                                                            x30 = porta_or_3(A3, x14, x15);
+                                                            x31 = porta_not(x30);
+                                                            x32 = porta_or(x16, x17);
+                                                            x33 = porta_not(x32);
+                                                            x34 = porta_and(Cn, x1);
+                                                            x35 = porta_not(x34);
+                                                            x36 = porta_not(x18);
                                                         } else {
                                                             printf("[!] ERRORE: Gli input devono essere obbligatoriamente 0 o 1.\n");
                                                         }
