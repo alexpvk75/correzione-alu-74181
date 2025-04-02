@@ -96,6 +96,8 @@ int main() {
                                                             x34 = porta_and(Cn, x1);
                                                             x35 = porta_not(x34);
                                                             x36 = porta_not(x18);
+                                                            x37 = porta_and(x1, x18);
+                                                            x38 = porta_and_3(x1, x19, Cn);
                                                         } else {
                                                             printf("[!] ERRORE: Gli input devono essere obbligatoriamente 0 o 1.\n");
                                                         }
