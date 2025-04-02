@@ -27,9 +27,9 @@ int main() {
     int a, b;
     int Cn, M, A0, B0, A1, B1, A2, B2, A3, B3, S0, S1, S2, S3; // input ALU
     int C, Cn_piu_4, P, F3, F2, A_uguale_B, F1, F0; // output ALU
-    int or1;
-    int x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20;
-    int x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39, x40;
+    int neg1, neg2, neg3, neg4, neg5;
+    int and1, and2, and3, and4, and5, and6, and7, and8, and9, and10, and11, and12, and13, and14, and15, and16;
+    int nor1, nor2, nor3, nor4, nor5, nor6, nor7, nor8;
     printf("Inserisci i valori degli input di ingresso:\n");
     printf("Cn: "); scanf("%d", &Cn);
     printf("M: "); scanf("%d", &M);
@@ -60,46 +60,19 @@ int main() {
                                                 if (S1 == 0 || S1 == 1) {
                                                     if (S2 == 0 || S2 == 1) {
                                                         if (S3 == 0 || S3 == 1) {
-                                                            x1 = porta_not(M);
-                                                            x2 = porta_not(B0);
-                                                            x3 = porta_not(B1);
-                                                            x4 = porta_not(B2);
-                                                            x5 = porta_not(B3);
-                                                            x6 = porta_and(B0, S0);
-                                                            x7 = porta_and(S1, x2);
-                                                            x8 = porta_and_3(x2, S2, A0);
-                                                            x9 = porta_and_3(A0, B0, S3);
-                                                            x10 = porta_and(B1, S0);
-                                                            x11 = porta_and(S1, x3);
-                                                            x12 = porta_and_3(x3, S2, A1);
-                                                            x13 = porta_and_3(A1, B1, S3);
-                                                            x14 = porta_and(B2, S0);
-                                                            x15 = porta_and(S1, x5);
-                                                            x16 = porta_and_3(x5, S2, S3);
-                                                            x17 = porta_and_3(A3, B3, S3);
-                                                            x18 = porta_or_3(A0, x6, x7);
-                                                            x19 = porta_not(x18);
-                                                            x20 = porta_or(x8, x9);
-                                                            x21 = porta_not(x20);
-                                                            x22 = porta_or_3(A1, x10, x11);
-                                                            x23 = porta_not(x22);
-                                                            x24 = porta_or(x12, x13);
-                                                            x25 = porta_not(x24);
-                                                            x26 = porta_or_3(A2, x14, x15);
-                                                            x27 = porta_not(x26);
-                                                            x28 = porta_or(x12, x13);
-                                                            x29 = porta_not(x28);
-                                                            x30 = porta_or_3(A3, x14, x15);
-                                                            x31 = porta_not(x30);
-                                                            x32 = porta_or(x16, x17);
-                                                            x33 = porta_not(x32);
-                                                            x34 = porta_and(Cn, x1);
-                                                            x35 = porta_not(x34);
-                                                            x36 = porta_not(x18);
-                                                            x37 = porta_and(x1, x18);
-                                                            x38 = porta_and_3(x1, x19, Cn);
 
 
+                                                            neg1 = porta_not(B3);
+                                                            neg2 = porta_not(B2);
+                                                            neg3 = porta_not(B1);
+                                                            neg4 = porta_not(B0);
+                                                            neg5 = porta_not(M);
+
+
+                                                            and1 = porta_and_3(B3,S3,A3);
+                                                            and2 = porta_and_3(neg1,S2,A3);
+                                                            and3 = porta_and(neg1,S1);
+                                                            and4 = porta_and(S0,B3);
                                                             printf("Ecco i risultati degli output dell' ALU\n");
                                                         } else {
                                                             printf("[!] ERRORE: Gli input devono essere obbligatoriamente 0 o 1.\n");
