@@ -98,6 +98,9 @@ int main() {
                                                             x36 = porta_not(x18);
                                                             x37 = porta_and(x1, x18);
                                                             x38 = porta_and_3(x1, x19, Cn);
+
+
+                                                            printf("Ecco i risultati degli output dell' ALU\n");
                                                         } else {
                                                             printf("[!] ERRORE: Gli input devono essere obbligatoriamente 0 o 1.\n");
                                                         }
