@@ -10,20 +10,18 @@ int porta_exor(int a, int b) { return (a + b) - 2 * (a * b); }
 int porta_or_3(int a, int b, int c) { return porta_or(porta_or(a, b), c); }
 int porta_or_4(int a, int b, int c, int d) { return porta_or(porta_or(a, b), porta_or(c, d)); }
 int porta_or_5(int a, int b, int c, int d, int e) { return porta_or(porta_or_4(a, b, c, d), e); }
-// (continua la logica in modo simile)
+
 
 // Porta AND per più ingressi
 int porta_and_3(int a, int b, int c) { return porta_and(porta_and(a, b), c); }
 int porta_and_4(int a, int b, int c, int d) { return porta_and(porta_and(a, b), porta_and(c, d)); }
 int porta_and_5(int a, int b, int c, int d, int e) {return porta_and(porta_and(porta_and(a, b), porta_and(c, d)), e);}
 
-// (continua la logica in modo simile)
 
 // Porta EXOR per più ingressi
 int porta_exor_3(int a, int b, int c) { return porta_exor(porta_exor(a, b), c); }
 int porta_exor_4(int a, int b, int c, int d) { return porta_exor(porta_exor(a, b), porta_exor(c, d)); } // Corretta parentesi
 int porta_exor_5(int a, int b, int c, int d, int e) { return porta_exor(porta_exor_4(a, b, c, d), e); }
-// (continua la logica in modo simile)
 
 int main() {
     int Cn,M,A0,B0,A1,B1,A2,B2,A3,B3,S0,S1,S2,S3;
