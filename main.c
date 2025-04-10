@@ -30,7 +30,7 @@ int porta_and_5(int a, int b, int c, int d, int e) {return porta_and(porta_and(p
 
 // Porta EXOR per più ingressi
 int porta_exor_3(int a, int b, int c) { return porta_exor(porta_exor(a, b), c); }
-int porta_exor_4(int a, int b, int c, int d) { return porta_exor(porta_exor(a, b), porta_exor(c, d)); } // Corretta parentesi
+int porta_exor_4(int a, int b, int c, int d) { return porta_exor(porta_exor(a, b), porta_exor(c, d)); }
 int porta_exor_5(int a, int b, int c, int d, int e) { return porta_exor(porta_exor_4(a, b, c, d), e); }
 
 int main() {
@@ -124,18 +124,20 @@ int main() {
     int P = nand02;
     int Cn_piu_4 = or0001;
     int G = nor004;
-    printf("________________________________________\n");
-    printf("Ecco i risultati degli output dell' ALU\n");
-    printf("________________________________________\n");
-    printf("  \n");
-    printf("Output F0 -> %i\n", F0);
-    printf("Output F1 -> %i\n", F1);
-    printf("Output A=B -> %i\n", A_uguale_B);
-    printf("Output F2 -> %i\n", F2);
-    printf("Output F3 -> %i\n", F3);
-    printf("Output P -> %i\n", P);
-    printf("Output Cn+4 -> %i\n", Cn_piu_4);
-    printf("Output G -> %i\n", G);
-    printf("________________________________________\n");
+
+    printf("___________________________________________\n");
+    printf("|                                          |\n");
+    printf("|  Ecco i risultati degli output dell' ALU |\n");
+    printf("|__________________________________________|\n");
+    printf("|                                          |\n");
+    printf("| Output F0 -> %i                           |\n", F0);
+    printf("| Output F1 -> %i                           |\n", F1);
+    printf("| Output A=B -> %i                          |\n", A_uguale_B);
+    printf("| Output F2 -> %i                           |\n", F2);
+    printf("| Output F3 -> %i                           |\n", F3);
+    printf("| Output P -> %i                            |\n", P);
+    printf("| Output Cn+4 -> %i                         |\n", Cn_piu_4);
+    printf("| Output G -> %i                            |\n", G);
+    printf("|__________________________________________|\n");
     } else {printf("[!] ERRORE: Gli input devono essere obbligatoriamente 0 o 1.\n");}
 }
