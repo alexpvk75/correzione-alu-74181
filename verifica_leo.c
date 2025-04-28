@@ -1,6 +1,8 @@
 /*
 VERIFICA DI TPS 
 Leonardo Galli 3C INF
+28/04/2025
+
 
 Costruire un simulatore C-codificato che implementi la seguente rete di calcolo (circuito) booleano 
 ridondante (i.e. simmetrica rispetto all'asse sinistra-destra),
@@ -21,11 +23,40 @@ Nota - si rende necessario calcolare la funzione di commutazione del circuito lo
 
 #include <stdio.h>
 
-// Porte logiche elementari utilizzate per lo svolgimento della traccia
+// Porte logiche elementari utilizzate per lo svolgimento della traccia con le rispettive tavole della verità per il controllo e la simulazione
 int porta_not(int a) { return 1 - a; }
+/*
+ a | 1 - a  |
+ 0 |    1   |
+ 1 |    0   |
+*/
+
 int porta_and(int a, int b) { return a * b; }
+/*
+ a | b | a * b |
+ 0 | 0 |   0   |
+ 0 | 1 |   0   |
+ 1 | 0 |   0   |
+ 1 | 1 |   1   |
+*/
+
 int porta_or(int a, int b) { return a + b - a * b; }
+/*
+ a | b | a + b - a * b |
+ 0 | 0 |       0       |
+ 0 | 1 |       1       |
+ 1 | 0 |       1       |
+ 1 | 1 |       1       |
+*/
+
 int porta_exor(int a, int b) { return a + b - 2 * a * b; }
+/*
+ a | b | a + b - 2 * a * b |
+ 0 | 0 |          0        |
+ 0 | 1 |          1        |
+ 1 | 0 |          1        |
+ 1 | 1 |          0        |
+*/
 
 int main() {
     int p, q, tentativi, x1, x2, y, z;
@@ -88,6 +119,15 @@ int main() {
     return 0;
 }
 
+/*
+Tavola di verità della rete (non richiesta, inserita per verificare il funzionamento del codice):
+
+ p | q | p + q - 2 * p * q | x1 = 1 - (...) | x1 * x1 | x2 = x1 + x1*x1 - x1*x1*x1 | y | z |
+ 0 | 0 |        0          |       1        |    1    |            1              | 1 | 1 |
+ 0 | 1 |        1          |       0        |    0    |            0              | 0 | 0 |
+ 1 | 0 |        1          |       0        |    0    |            0              | 0 | 0 |
+ 1 | 1 |        0          |       1        |    1    |            1              | 1 | 1 |
+*/
 
 /*
 
