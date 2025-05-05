@@ -1,4 +1,12 @@
 /*
+ .d888888  dP        dP     dP             d88888P dP   dP d88  .d888b. d88  
+d8'    88  88        88     88                 d8' 88   88  88  Y8' `8P  88  
+88aaaaa88a 88        88     88                d8'  88aaa88  88  d8bad8b  88  
+88     88  88        88     88               d8'        88  88  88` `88  88  
+88     88  88        Y8.   .8P              d8'         88  88  8b. .88  88  
+88     88  88888888P `Y88888P'             d8'          dP d88P Y88888P d88P                                                                                                                                                      
+*/
+/*
  ╔══════════════════════════════════════════════════════════════════════════════╗
  ║                                ⇨ ALU 74181 ⇦                                 ║
  ╠══════════════════════════════════════════════════════════════════════════════╣
@@ -9,7 +17,7 @@
  ║  • Danilo Ambrogio Brusa                                                     ║
  ║  • Oleksandr Pavlyk                                                          ║
  ║  • Angelo Feng                                                               ║
- ║  • Davide Ling Yu                                                            ║
+ ║  • Davide (Ling) Yu                                                          ║
  ║                                                                              ║
  ╠══════════════════════════════════════════════════════════════════════════════╣
  ║                              ⇨ DESCRIZIONE ⇦                                 ║
@@ -31,7 +39,7 @@
  ║  • Simulazione completa dell'ALU 74181 in linguaggio C                       ║
  ║  • La simulazione copre:                                                     ║
  ║    • Operazioni aritmetiche: addizione, sottrazione, ecc.                    ║
- ║    • Operazioni logiche: AND, OR, XOR.                                       ║
+ ║    • Operazioni logiche: AND, OR, EXOR.                                      ║
  ║    • Shift di bit: shift a sinistra e a destra                               ║
  ║                                                                              ║
  ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -70,10 +78,8 @@ int binario_a_decimale(int bin) {
 int decimale_a_binario(int dec) {
     int bin = 0, base = 1, resto;
     while (dec > 0) {
-        // Ottiene il resto della divisione per 2 (0 o 1)
         resto = dec % 2;
         dec = dec / 2;
-        // Costruisce il numero binario posizionando il bit nella posizione corretta
         bin += resto * base;
         base *= 10;
     }
@@ -103,7 +109,7 @@ void salva_in_memoria(int valore) {
     if (indice_memoria < 10) {
         memoria[indice_memoria++] = valore;
     } else {
-        printf("Memoria piena!\n");
+        printf("[!] Memoria piena!\n");
     }
 }
 void attendi_un_ciclo_clock() {
@@ -113,8 +119,6 @@ void attendi_un_ciclo_clock() {
         current_time = clock();
     } while ((current_time - start_time) < CLOCKS_PER_SEC / 1000);
 }
-
-
 void stampa_memoria() {
     printf("Contenuto della memoria:\n");
     for (int i = 0; i < indice_memoria; i++) {
@@ -138,18 +142,23 @@ void stampa_memoria() {
  ║                                                                              ║
  ╚══════════════════════════════════════════════════════════════════════════════╝
  */
+// Porta logica NOT
 int porta_not(int a) { 
     return 1 - a; 
 }
+// Porta logica AND
 int porta_and(int a, int b) { 
     return a * b; 
 }
+// Porta logica OR
 int porta_or(int a, int b) { 
     return (a + b) - (a * b); 
 }
+// Porta logica EXOR
 int porta_exor(int a, int b) { 
     return (a + b) - 2 * (a * b); 
 }
+
 int porta_or_3(int a, int b, int c) { 
     int tmp = porta_or(a, b); 
     return porta_or(tmp, c); 
@@ -306,144 +315,186 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
  */
  void simula_alu_74181() {
     int Cn, M, A0, B0, A1, B1, A2, B2, A3, B3, S0, S1, S2, S3;
-    printf("Inserisci i valori degli input (0 o 1):\n");
-    printf("Cn: ");
+    printf(">> Inserisci i valori degli input (0 o 1):\n");
+    printf(">> Cn: ");
     scanf("%d", &Cn);
-    if (Cn != 0 && Cn != 1) {
+    //if (Cn != 0 && Cn != 1) {
+    if (Cn == 0){}else if(Cn == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      Cn deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("M:  ");
+    printf(">> M:  ");
     scanf("%d", &M);
-    if (M != 0 && M != 1) {
+    //if (M != 0 && M != 1) {
+    if (M == 0){}else if(M == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║       M deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("A0: ");
+    printf(">> A0: ");
     scanf("%d", &A0);
-    if (A0 != 0 && A0 != 1) {
+    //if (A0 != 0 && A0 != 1) {
+    if (A0 == 0){}else if(A0 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      A0 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("B0: ");
+    printf(">> B0: ");
     scanf("%d", &B0);
-    if (B0 != 0 && B0 != 1) {
+    //if (B0 != 0 && B0 != 1) {
+    if (B0 == 0){}else if(B0 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      B0 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("A1: ");
+    printf(">> A1: ");
     scanf("%d", &A1);
-    if (A1 != 0 && A1 != 1) {
+    //if (A1 != 0 && A1 != 1) {
+    if (A1 == 0){}else if(A1 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      A1 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("B1: ");
+    printf(">> B1: ");
     scanf("%d", &B1);
-    if (B1 != 0 && B1 != 1) {
+    //if (B1 != 0 && B1 != 1) {
+    if (B1 == 0){}else if(B1 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      B1 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("A2: ");
+    printf(">> A2: ");
     scanf("%d", &A2);
-    if (A2 != 0 && A2 != 1) {
+    //if (A2 != 0 && A2 != 1) {
+    if (A2 == 0){}else if(A2 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      A2 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("B2: ");
+    printf(">> B2: ");
     scanf("%d", &B2);
-    if (B2 != 0 && B2 != 1) {
+    //if (B2 != 0 && B2 != 1) {
+    if (B2 == 0){}else if(B2 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      B2 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("A3: ");
+    printf(">> A3: ");
     scanf("%d", &A3);
-    if (A3 != 0 && A3 != 1) {
+    //if (A3 != 0 && A3 != 1) {
+    if (A3 == 0){}else if(A3 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      A3 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("B3: ");
+    printf(">> B3: ");
     scanf("%d", &B3);
-    if (B3 != 0 && B3 != 1) {
+    //if (B3 != 0 && B3 != 1) {
+    if (B3 == 0){}else if(B3 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      B3 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("S0: ");
+    printf(">> S0: ");
     scanf("%d", &S0);
-    if (S0 != 0 && S0 != 1) {
+    //if (S0 != 0 && S0 != 1) {
+    if (S0 == 0){}else if(S0 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      S0 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("S1: ");
+    printf(">> S1: ");
     scanf("%d", &S1);
-    if (S1 != 0 && S1 != 1) {
+    //if (S1 != 0 && S1 != 1) {
+    if (S1 == 0){}else if(S1 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      S1 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("S2: ");
+    printf(">> S2: ");
     scanf("%d", &S2);
-    if (S2 != 0 && S2 != 1) {
+    //if (S2 != 0 && S2 != 1) {
+    if (S2 == 0){}else if(S2 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      S2 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("S3: ");
+    printf(">> S3: ");
     scanf("%d", &S3);
-    if (S3 != 0 && S3 != 1) {
+    //if (S3 != 0 && S3 != 1) {
+    if (S3 == 0){}else if(S3 == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      S3 deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
@@ -457,17 +508,44 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
     printf("\n║           RISULTATI ALU 74181               ║");
     printf("\n╠═════════════════════════════════════════════╣");
     printf("\n║                                             ║");
-    printf("\n║  - F0      = %-3d                           ║", F[0]);
-    printf("\n║  - F1      = %-3d                           ║", F[1]);
-    printf("\n║  - A = B   = %-3d                           ║", A_uguale_B);
-    printf("\n║  - F2      = %-3d                           ║", F[2]);
-    printf("\n║  - F3      = %-3d                           ║", F[3]);
-    printf("\n║  - P       = %-3d                           ║", P);
-    printf("\n║  - Cn + 4  = %-3d                           ║", Cn_piu_4);
-    printf("\n║  - G       = %-3d                           ║", G);
+    printf("\n║  - F0      = %-3d                            ║", F[0]);
+    printf("\n║  - F1      = %-3d                            ║", F[1]);
+    printf("\n║  - A = B   = %-3d                            ║", A_uguale_B);
+    printf("\n║  - F2      = %-3d                            ║", F[2]);
+    printf("\n║  - F3      = %-3d                            ║", F[3]);
+    printf("\n║  - P       = %-3d                            ║", P);
+    printf("\n║  - Cn + 4  = %-3d                            ║", Cn_piu_4);
+    printf("\n║  - G       = %-3d                            ║", G);
     printf("\n║                                             ║");
     printf("\n╚═════════════════════════════════════════════╝\n");
     salva_in_memoria(Cn_piu_4);
+    FILE *file = fopen("risultati_alu_74181.txt", "w");
+    if (file == NULL) {
+        printf("╔════════════════════════════════╗\n");
+        printf("║            ERRORE              ║\n");
+        printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
+        printf("║    Impossibile aprire file     ║\n");
+        printf("║         di scritturra          ║\n");
+        printf("║                                ║\n");
+        printf("╚════════════════════════════════╝\n");
+        return;
+    }
+    fprintf(file, "╔═════════════════════════════════════════════╗\n");
+    fprintf(file, "║           RISULTATI ALU 74181               ║\n");
+    fprintf(file, "╠═════════════════════════════════════════════╣\n");
+    fprintf(file, "║                                             ║\n");
+    fprintf(file, "║  - F0      = %-3d                            ║\n", F[0]);
+    fprintf(file, "║  - F1      = %-3d                            ║\n", F[1]);
+    fprintf(file, "║  - A = B   = %-3d                            ║\n", A_uguale_B);
+    fprintf(file, "║  - F2      = %-3d                            ║\n", F[2]);
+    fprintf(file, "║  - F3      = %-3d                            ║\n", F[3]);
+    fprintf(file, "║  - P       = %-3d                            ║\n", P);
+    fprintf(file, "║  - Cn + 4  = %-3d                            ║\n", Cn_piu_4);
+    fprintf(file, "║  - G       = %-3d                            ║\n", G);
+    fprintf(file, "║                                             ║\n");
+    fprintf(file, "╚═════════════════════════════════════════════╝\n");
+    fclose(file);
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════════╗
@@ -495,38 +573,47 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
     unsigned int opA, opB;
     int Cn, M;
     int S[4];
-    printf("Inserisci il primo operando (numero decimale a 32 bit): ");
+    printf(">> Inserisci il primo operando (numero decimale a 32 bit): ");
     scanf("%u", &opA);
-    printf("Inserisci il secondo operando (numero decimale a 32 bit): ");
+    printf(">> Inserisci il secondo operando (numero decimale a 32 bit): ");
     scanf("%u", &opB);
-    printf("Inserisci il segnale di Carry In (Cn, 0 o 1): ");
+    printf(">> Inserisci il segnale di Carry In (Cn, 0 o 1): ");
     scanf("%d", &Cn);
-    if (Cn != 0 && Cn != 1) {
+    //if (Cn != 0 && Cn != 1) {
+    if (Cn == 0){}else if(Cn == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║      Cn deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("Inserisci il segnale M (0 o 1): ");
+    printf(">> Inserisci il segnale M (0 o 1): ");
     scanf("%d", &M);
-    if (M != 0 && M != 1) {
+    //if (M != 0 && M != 1) {
+    if (M == 0){}else if(M == 1){}else {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║       M deve essere 0 o 1      ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return;
     }
-    printf("Inserisci i segnali di selezione S0, S1, S2, S3 (0 o 1, separati da spazi): ");
+    printf(">> Inserisci i segnali di selezione S0, S1, S2, S3 (0 o 1, separati da spazi): ");
     scanf("%d %d %d %d", &S[0], &S[1], &S[2], &S[3]);
     for (int i = 0; i < 4; i++) {
-        if (S[i] != 0 && S[i] != 1) {
+        //if (S[i] != 0 && S[i] != 1) {
+        if (S[i] == 0){}else if(S[i] == 1){}else {
             printf("╔════════════════════════════════╗\n");
             printf("║            ERRORE              ║\n");
             printf("╠════════════════════════════════╣\n");
+            printf("║                                ║\n");
             printf("║      S%d deve essere 0 o 1      ║\n", i);
+            printf("║                                ║\n");
             printf("╚════════════════════════════════╝\n");
             return;
         }
@@ -581,7 +668,9 @@ int divisione(int a, int b) {
         printf("╔════════════════════════════════╗\n");
         printf("║            ERRORE              ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║   Impossibile dividere per 0   ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
         return 0;
     }
@@ -589,90 +678,90 @@ int divisione(int a, int b) {
 }
 void operazioni_algebriche() {
     int num_elementi;
-    printf("Quanti elementi vuoi utilizzare (2 o 3)? ");
+    printf(">> Quanti elementi vuoi utilizzare (2 o 3)? ");
     scanf("%d", &num_elementi);
     if (num_elementi == 2) {
         int a, b;
-        printf("Inserisci i due numeri: ");
+        printf(">> Inserisci i due numeri: ");
         scanf("%d %d", &a, &b);
         char operazione[20];
-        printf("Scegli l'operazione (somma, sottrazione, moltiplicazione, divisione): ");
+        printf(">> Scegli l'operazione (somma, sottrazione, moltiplicazione, divisione): ");
         scanf("%s", operazione);
         if (strcmp(operazione, "somma") == 0) {
             int res = somma(a, b);
             printf("╔════════════════════════════════╗\n");
             printf("║         SOMMA ALGEBRICA        ║\n");
-            printf("╠════════════════════════════════╣\n");
-            printf("║           Risultato: %d        ║\n", res);
             printf("╚════════════════════════════════╝\n");
+            printf("Risultato: %d\n", res);
             salva_in_memoria(res);
         } else if (strcmp(operazione, "sottrazione") == 0) {
             int res = sottrazione(a, b);
             printf("╔════════════════════════════════╗\n");
             printf("║      SOTTRAZIONE ALGEBRICA     ║\n");
-            printf("╠════════════════════════════════╣\n");
-            printf("║           Risultato: %d        ║\n", res);
             printf("╚════════════════════════════════╝\n");
+            printf("Risultato: %d\n", res);
             salva_in_memoria(res);
         } else if (strcmp(operazione, "moltiplicazione") == 0) {
             int res = moltiplicazione(a, b);
             printf("╔════════════════════════════════╗\n");
             printf("║    MOLTIPLICAZIONE ALGEBRICA   ║\n");
-            printf("╠════════════════════════════════╣\n");
-            printf("║           Risultato: %d        ║\n", res);
             printf("╚════════════════════════════════╝\n");
+            printf("Risultato: %d\n", res);
             salva_in_memoria(res);
         } else if (strcmp(operazione, "divisione") == 0) {
             int res = divisione(a, b);
             printf("╔════════════════════════════════╗\n");
             printf("║        DIVISIONE ALGEBRICA     ║\n");
-            printf("╠════════════════════════════════╣\n");
-            printf("║           Risultato: %d        ║\n", res);
             printf("╚════════════════════════════════╝\n");
+            printf("Risultato: %d\n", res);
             salva_in_memoria(res);
         } else {
             printf("╔════════════════════════════════╗\n");
             printf("║             ERRORE             ║\n");
             printf("╠════════════════════════════════╣\n");
+            printf("║                                ║\n");
             printf("║   Operazione non riconosciuta  ║\n");
+            printf("║                                ║\n");
             printf("╚════════════════════════════════╝\n");
         }
     } else if (num_elementi == 3) {
         int a, b, c;
-        printf("Inserisci i tre numeri: ");
+        printf(">> Inserisci i tre numeri: ");
         scanf("%d %d %d", &a, &b, &c);
         char operazione[20];
-        printf("Scegli l'operazione (somma o moltiplicazione): ");
+        printf(">> Scegli l'operazione (somma o moltiplicazione): ");
         scanf("%s", operazione);
         if (strcmp(operazione, "somma") == 0) {
             int res = somma(somma(a, b), c);
             printf("╔════════════════════════════════╗\n");
             printf("║         SOMMA ALGEBRICA        ║\n");
-            printf("╠════════════════════════════════╣\n");
-            printf("║           Risultato: %d        ║\n", res);
             printf("╚════════════════════════════════╝\n");
+            printf("Risultato: %d\n", res);
             salva_in_memoria(res);
         } else if (strcmp(operazione, "moltiplicazione") == 0) {
             int res = moltiplicazione(moltiplicazione(a, b), c);
             printf("╔════════════════════════════════╗\n");
             printf("║    MOLTIPLICAZIONE ALGEBRICA   ║\n");
-            printf("╠════════════════════════════════╣\n");
-            printf("║           Risultato: %d        ║\n", res);
             printf("╚════════════════════════════════╝\n");
+            printf("Risultato: %d\n", res);
             salva_in_memoria(res);
         } else {
             printf("╔════════════════════════════════╗\n");
             printf("║             ERRORE             ║\n");
             printf("╠════════════════════════════════╣\n");
+            printf("║                                ║\n");
             printf("║   Operazione non riconosciuta  ║\n");
+            printf("║                                ║\n");
             printf("╚════════════════════════════════╝\n");
         }
     } else {
         printf("╔════════════════════════════════╗\n");
         printf("║             ERRORE             ║\n");
         printf("╠════════════════════════════════╣\n");
+        printf("║                                ║\n");
         printf("║ Numero di elementi non valido. ║\n");
         printf("║      Scegli tra 2 oppure 3     ║\n");
+        printf("║                                ║\n");
         printf("╚════════════════════════════════╝\n");
     }
 }
@@ -728,21 +817,17 @@ void operazioni_algebriche() {
             operazioni_algebriche();
         } else if (scelta == 4) {
             int bin;
-            printf("Inserisci un numero binario: ");
+            printf(">> Inserisci un numero binario: ");
             scanf("%d", &bin);
             int dec = binario_a_decimale(bin);
-            printf("╔════════════════════════════════════════════════════════╗\n");
-            printf("║                Risultato (decimale): %d                ║\n", dec);
-            printf("╚════════════════════════════════════════════════════════╝\n");
+            printf("Risultato (decimale): %d\n", dec);
             salva_in_memoria(dec);
         } else if (scelta == 5) {
             int dec;
-            printf("Inserisci un numero decimale: ");
+            printf(">> Inserisci un numero decimale: ");
             scanf("%d", &dec);
             int bin = decimale_a_binario(dec);
-            printf("╔════════════════════════════════════════════════════════╗\n");
-            printf("║                 Risultato (binario): %d                ║\n", bin);
-            printf("╚════════════════════════════════════════════════════════╝\n");
+            printf("Risultato (binario): %d\n", bin);
             salva_in_memoria(bin);
         } else if (scelta == 6) {
             alu_pipo_8();
@@ -755,7 +840,9 @@ void operazioni_algebriche() {
             printf("╔════════════════════════════════════════════════════════╗\n");
             printf("║                          ERRORE                        ║\n");
             printf("╠════════════════════════════════════════════════════════╣\n");
+            printf("║                                                        ║\n");
             printf("║                     Scelta non valida                  ║\n");
+            printf("║                                                        ║\n");
             printf("╚════════════════════════════════════════════════════════╝\n");
         }
     }
