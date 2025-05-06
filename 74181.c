@@ -49,6 +49,7 @@ d8'    88  88        88     88                 d8' 88   88  88  Y8' `8P  88
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <unistd.h>
 /*
  ╔══════════════════════════════════════════════════════════════════════════════╗
  ║                               ⇨ CONVERSIONI ⇦                                ║
@@ -895,29 +896,7 @@ void misura_ciclo_clock() {
     printf("Un ciclo di clock richiede circa 1 millisecondo in questa simulazione.\n");
     printf("Questo è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
 }
-
-/*
- ╔════════════════════════════════════════════════════════════════════════════════════╗
- ║                                ⇨ FUNZIONE MAIN ⇦                                   ║
- ╠════════════════════════════════════════════════════════════════════════════════════╣
- ║                                                                                    ║
- ║  Il menu principale offre le varie funzionalità:                                   ║
- ║                                                                                    ║
- ║    1. Operazioni Logiche (simulazione di un modulo ALU 74181 singolo).             ║
- ║    2. Operazioni Algebriche.                                                       ║
- ║    3. Convertitore Binario -> Decimale.                                            ║
- ║    4. Convertitore Decimale -> Binario.                                            ║
- ║    5. ALU in Modalità PIPO: simulazione di una ALU a 32 bit composta da 8 moduli   ║
- ║       74181 (4 bit ciascuno).                                                      ║
- ║    6. Visualizza Memoria: visualizza i risultati salvati nella memoria.            ║
- ║    0. Esci: termina il programma.                                                  ║
- ║                                                                                    ║
- ║  Ogni scelta viene gestita tramite if annidati (non usando operatori composti)     ║
- ║  come richiesto.                                                                   ║
- ║                                                                                    ║
- ╚════════════════════════════════════════════════════════════════════════════════════╝
- */
- int main() {
+void menu() {
     int scelta;
     while (1) {
         printf("\n .d888888  dP        dP     dP             d88888P dP   dP d88  .d888b. d88  ");
@@ -983,4 +962,31 @@ void misura_ciclo_clock() {
         }
     }
     return 0;
+}
+/*
+ ╔════════════════════════════════════════════════════════════════════════════════════╗
+ ║                                ⇨ FUNZIONE MAIN ⇦                                   ║
+ ╠════════════════════════════════════════════════════════════════════════════════════╣
+ ║                                                                                    ║
+ ║  Il menu principale offre le varie funzionalità:                                   ║
+ ║                                                                                    ║
+ ║    1. Operazioni Logiche (simulazione di un modulo ALU 74181 singolo).             ║
+ ║    2. Operazioni Algebriche.                                                       ║
+ ║    3. Convertitore Binario -> Decimale.                                            ║
+ ║    4. Convertitore Decimale -> Binario.                                            ║
+ ║    5. ALU in Modalità PIPO: simulazione di una ALU a 32 bit composta da 8 moduli   ║
+ ║       74181 (4 bit ciascuno).                                                      ║
+ ║    6. Visualizza Memoria: visualizza i risultati salvati nella memoria.            ║
+ ║    0. Esci: termina il programma.                                                  ║
+ ║                                                                                    ║
+ ║  Ogni scelta viene gestita tramite if annidati (non usando operatori composti)     ║
+ ║  come richiesto.                                                                   ║
+ ║                                                                                    ║
+ ╚════════════════════════════════════════════════════════════════════════════════════╝
+ */
+ int main() {
+    sleep(100000);
+    int mostrare_menu;
+    if (mostrare_menu == 1){menu();}else if(mostrare_menu == 0){printf("");} else {printf("");}
+    
 }
