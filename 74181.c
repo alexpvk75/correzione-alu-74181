@@ -75,6 +75,7 @@ int binario_a_decimale(int bin) {
         dec += resto * base;
         base *= 2;
     }
+    sleep(10);
     return dec;
 }
 int decimale_a_binario(int dec) {
@@ -85,6 +86,7 @@ int decimale_a_binario(int dec) {
         bin += resto * base;
         base *= 10;
     }
+    sleep(10);
     return bin;
 }
 /*
@@ -113,6 +115,7 @@ void salva_in_memoria(int valore) {
     } else {
         printf("[!] Memoria piena!\n");
     }
+    sleep(10);
 }
 void attendi_un_ciclo_clock() {
     clock_t start_time = clock();
@@ -120,12 +123,14 @@ void attendi_un_ciclo_clock() {
     do {
         current_time = clock();
     } while ((current_time - start_time) < CLOCKS_PER_SEC / 1000);
+    sleep(10);
 }
 void stampa_memoria() {
     printf("Contenuto della memoria:\n");
     for (int i = 0; i < indice_memoria; i++) {
         printf("Memoria[%d] = %-3d\n", i, memoria[i]);
     }
+    sleep(10);
 }
 /*
  ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -689,6 +694,7 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
     fprintf(file_out, "╚═════════════════════════════════════════════╝\n");
 
     fclose(file_out);
+    sleep(10);
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════════╗
@@ -748,6 +754,7 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
     }
     printf("Risultato ALU PIPO a 32 bit (decimale): %u\n", result);
     salva_in_memoria(result);
+    sleep(10);
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════╗
@@ -897,7 +904,7 @@ void misura_ciclo_clock() {
     printf("Un ciclo di clock richiede circa 1 millisecondo in questa simulazione.\n");
     printf("Questo è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
     sleep(10);
-    return 0;
+    return;
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════╗
