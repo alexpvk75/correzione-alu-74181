@@ -829,6 +829,7 @@ void operazioni_algebriche() {
     } else {
         printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║ Numero di elementi non valido. ║\n║      Scegli tra 2 oppure 3     ║\n║                                ║\n╚════════════════════════════════╝\n");
     }
+    sleep(10);
 }
 
 void misura_ciclo_clock() {
@@ -895,72 +896,7 @@ void misura_ciclo_clock() {
     printf("\nSimulazione completata.\n");
     printf("Un ciclo di clock richiede circa 1 millisecondo in questa simulazione.\n");
     printf("Questo è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
-}
-void menu() {
-    int scelta;
-    while (1) {
-        printf("\n .d888888  dP        dP     dP             d88888P dP   dP d88  .d888b. d88  ");
-        printf("\nd8'    88  88        88     88                 d8' 88   88  88  Y8' `8P  88  ");
-        printf("\n88aaaaa88a 88        88     88                d8'  88aaa88  88  d8bad8b  88  ");
-        printf("\n88     88  88        88     88               d8'        88  88  88` `88  88  ");
-        printf("\n88     88  88        Y8.   .8P              d8'         88  88  8b. .88  88  ");
-        printf("\n88     88  88888888P `Y88888P'             d8'          dP d88P Y88888P d88P ");
-        printf("\n              By Davide, Angelo, Leonardo, Danilo e Alex\n");
-        printf("\n");
-        printf("\n╔════════════════════════════════════════════════════════╗");
-        printf("\n║                    MENU PRINCIPALE                     ║");
-        printf("\n╠════════════════════════════════════════════════════════╣");
-        printf("\n║                                                        ║");
-        printf("\n║  1. Operazioni Logiche (ALU 74181 - Singolo)           ║");
-        printf("\n║  2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║");
-        printf("\n║  3. Operazioni Algebriche                              ║");
-        printf("\n║  4. Convertitore Binario → Decimale                    ║");
-        printf("\n║  5. Convertitore Decimale → Binario                    ║");
-        printf("\n║  6. ALU in Modalità PIPO (32 bit - 8x74181)            ║");
-        printf("\n║  7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║");
-        printf("\n║  8. Visualizza Memoria                                 ║");
-        printf("\n║  9. Calcolo del Clock                                  ║");
-        printf("\n║  0. Esci                                               ║");
-        printf("\n║                                                        ║");
-        printf("\n╚════════════════════════════════════════════════════════╝");
-        printf("\n>> Inserisci la tua scelta: ");
-        scanf("%d", &scelta);
-        if (scelta == 0) {
-            break;
-        } else if (scelta == 1) {
-            simula_alu_74181();
-        } else if (scelta == 2) {
-            attendi_un_ciclo_clock();
-            simula_alu_74181();
-        } else if (scelta == 3) {
-            operazioni_algebriche();
-        } else if (scelta == 4) {
-            int bin;
-            printf(">> Inserisci un numero binario: ");
-            scanf("%d", &bin);
-            int dec = binario_a_decimale(bin);
-            printf("Risultato (decimale): %d\n", dec);
-            salva_in_memoria(dec);
-        } else if (scelta == 5) {
-            int dec;
-            printf(">> Inserisci un numero decimale: ");
-            scanf("%d", &dec);
-            int bin = decimale_a_binario(dec);
-            printf("Risultato (binario): %d\n", bin);
-            salva_in_memoria(bin);
-        } else if (scelta == 6) {
-            alu_pipo_8();
-        } else if (scelta == 7) {
-            attendi_un_ciclo_clock();
-            alu_pipo_8();
-        } else if (scelta == 8) {
-            stampa_memoria();
-        } else if (scelta == 9) {
-            misura_ciclo_clock();
-        } else {
-            printf("╔════════════════════════════════════════════════════════╗\n║                          ERRORE                        ║\n╠════════════════════════════════════════════════════════╣\n║                                                        ║\n║                     Scelta non valida                  ║\n║                                                        ║\n╚════════════════════════════════════════════════════════╝\n");
-        }
-    }
+    sleep(10);
     return 0;
 }
 /*
@@ -984,9 +920,60 @@ void menu() {
  ║                                                                                    ║
  ╚════════════════════════════════════════════════════════════════════════════════════╝
  */
- int main() {
-    sleep(100000);
-    int mostrare_menu;
-    if (mostrare_menu == 1){menu();}else if(mostrare_menu == 0){printf("");} else {printf("");}
-    
+int main() {
+    int scelta;
+
+    while (1) {
+        printf("\n╔════════════════════════════════════════════════════════╗");
+        printf("\n║                    MENU PRINCIPALE                     ║");
+        printf("\n╠════════════════════════════════════════════════════════╣");
+        printf("\n║  1. Operazioni Logiche (ALU 74181 - Singolo)           ║");
+        printf("\n║  2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║");
+        printf("\n║  3. Operazioni Algebriche                              ║");
+        printf("\n║  4. Convertitore Binario → Decimale                    ║");
+        printf("\n║  5. Convertitore Decimale → Binario                    ║");
+        printf("\n║  6. ALU in Modalità PIPO (32 bit - 8x74181)            ║");
+        printf("\n║  7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║");
+        printf("\n║  8. Visualizza Memoria                                 ║");
+        printf("\n║  9. Calcolo del Clock                                  ║");
+        printf("\n║  0. Esci                                               ║");
+        printf("\n╚════════════════════════════════════════════════════════╝");
+        printf("\n>> Inserisci la tua scelta: ");
+        scanf("%d", &scelta);
+
+        if (scelta == 0) {
+            printf("Uscita dal programma...\n");
+            break;
+        } else if (scelta == 1) {
+            simula_alu_74181();
+        } else if (scelta == 2) {
+            attendi_un_ciclo_clock();
+            simula_alu_74181();
+        } else if (scelta == 3) {
+            operazioni_algebriche();
+        } else if (scelta == 4) {
+            int bin;
+            printf(">> Inserisci un numero binario: ");
+            scanf("%d", &bin);
+            printf("Risultato (decimale): %d\n", binario_a_decimale(bin));
+        } else if (scelta == 5) {
+            int dec;
+            printf(">> Inserisci un numero decimale: ");
+            scanf("%d", &dec);
+            printf("Risultato (binario): %d\n", decimale_a_binario(dec));
+        } else if (scelta == 6) {
+            alu_pipo_8();
+        } else if (scelta == 7) {
+            attendi_un_ciclo_clock();
+            alu_pipo_8();
+        } else if (scelta == 8) {
+            stampa_memoria();
+        } else if (scelta == 9) {
+            misura_ciclo_clock();
+        } else {
+            printf("Scelta non valida!\n");
+        }
+    }
+
+    return 0;
 }
