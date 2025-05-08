@@ -224,76 +224,98 @@ int porta_exor_5(int a, int b, int c, int d, int e) {
  ╚══════════════════════════════════════════════════════════════════════════════╝
  */
 void n_ALU74181(int Cn, int M, int A[4], int B[4], int S[4],
-                         int F[4], int *A_uguale_B, int *P, int *Cn_piu_4, int *G) {
-    int neg1 = porta_not(M);
-    int neg2 = porta_not(B[0]);
-    int neg3 = porta_not(B[1]);
-    int neg4 = porta_not(B[2]);
-    int neg5 = porta_not(B[3]);
-    int and1 = porta_and(B[0], S[0]);
-    int and2 = porta_and(S[1], neg2);
-    int and3 = porta_and_3(neg2, S[2], A[0]);
-    int and4 = porta_and_3(A[0], B[0], S[3]);
-    int and5 = porta_and(B[1], S[0]);
-    int and6 = porta_and(S[1], neg3);
-    int and7 = porta_and_3(neg3, S[2], A[1]);
-    int and8 = porta_and_3(A[1], S[3], B[1]);
-    int and9 = porta_and(B[2], S[0]);
-    int and10 = porta_and(S[1], neg4);
-    int and11 = porta_and_3(neg4, S[2], A[2]);
-    int and12 = porta_and_3(A[2], S[3], B[2]);
-    int and13 = porta_and(B[3], S[0]);
-    int and14 = porta_and(S[1], neg5);
-    int and15 = porta_and_3(neg5, S[2], A[3]);
-    int and16 = porta_and_3(A[3], S[3], B[3]);
-    int nor1 = porta_not(porta_or_3(A[0], and1, and2));
-    int nor2 = porta_not(porta_or(and3, and4));
-    int nor3 = porta_not(porta_or_3(A[1], and5, and6));
-    int nor4 = porta_not(porta_or(and7, and8));
-    int nor5 = porta_not(porta_or_3(A[2], and9, and10));
-    int nor6 = porta_not(porta_or(and11, and12));
-    int nor7 = porta_not(porta_or_3(A[3], and13, and14));
-    int nor8 = porta_not(porta_or(and15, and16));
-    int nand01 = porta_not(porta_and(Cn, neg1));
-    int neg01 = porta_not(nor1);
-    int and01 = porta_and(neg1, nor1);
-    int and02 = porta_and_3(neg1, nor2, Cn);
-    int neg02 = porta_not(nor3);
-    int and03 = porta_and(neg1, nor3);
-    int and04 = porta_and_3(neg1, nor1, nor4);
-    int and05 = porta_and_4(neg1, Cn, nor2, nor4);
-    int neg03 = porta_not(nor5);
-    int and06 = porta_and(neg1, nor5);
-    int and07 = porta_and_3(neg1, nor3, nor6);
-    int and08 = porta_and_4(neg1, nor1, nor4, nor6);
-    int and09 = porta_and_5(neg1, Cn, nor2, nor4, nor6);
-    int neg04 = porta_not(nor7);
-    int nand02 = porta_not(porta_and_4(nor2, nor4, nor6, nor8));
-    int nand03 = porta_not(porta_and_5(Cn, nor2, nor4, nor6, nor8));
-    int and010 = porta_and_4(nor1, nor4, nor6, nor8);
-    int and011 = porta_and_3(nor3, nor6, nor8);
-    int and012 = porta_and(nor5, nor8);
-    int and001 = porta_and(neg01, nor2);
-    int nor001 = porta_not(porta_or(and01, and02));
-    int and002 = porta_and(neg02, nor4);
-    int nor002 = porta_not(porta_or_3(and03, and04, and05));
-    int and003 = porta_and(neg03, nor6);
-    int nor003 = porta_not(porta_or_4(and06, and07, and08, and09));
-    int and004 = porta_and(neg04, nor8);
-    int nor004 = porta_not(porta_or_4(and010, and011, and012, nor7));
-    int exor0001 = porta_exor(nand01, and001);
-    int exor0002 = porta_exor(nor001, and002);
-    int exor0003 = porta_exor(nor002, and003);
-    int exor0004 = porta_exor(nor003, and004);
-    F[0] = exor0001;
-    F[1] = exor0002;
-    F[2] = exor0003;
-    F[3] = exor0004;
-    *A_uguale_B = porta_and_4(exor0001, exor0002, exor0003, exor0004);
-    *P = nand02;
-    int or0001 = porta_or(porta_not(nand03), porta_not(nor004));
-    *Cn_piu_4 = or0001;
-    *G = nor004;
+    int F[4], int *A_uguale_B, int *P, int *Cn_piu_4, int *G) {
+// Negazioni iniziali
+int neg1 = porta_not(M);
+int neg2 = porta_not(B[0]);
+int neg3 = porta_not(B[1]);
+int neg4 = porta_not(B[2]);
+int neg5 = porta_not(B[3]);
+
+// AND variabili
+int and1 = porta_and(B[0], S[0]);
+int and2 = porta_and(S[1], neg2);
+int and3 = porta_and_3(neg2, S[2], A[0]);
+int and4 = porta_and_3(A[0], B[0], S[3]);
+int and5 = porta_and(B[1], S[0]);
+int and6 = porta_and(S[1], neg3);
+int and7 = porta_and_3(neg3, S[2], A[1]);
+int and8 = porta_and_3(A[1], S[3], B[1]);
+int and9 = porta_and(B[2], S[0]);
+int and10 = porta_and(S[1], neg4);
+int and11 = porta_and_3(neg4, S[2], A[2]);
+int and12 = porta_and_3(A[2], S[3], B[2]);
+int and13 = porta_and(B[3], S[0]);
+int and14 = porta_and(S[1], neg5);
+int and15 = porta_and_3(neg5, S[2], A[3]);
+int and16 = porta_and_3(A[3], S[3], B[3]);
+
+// NOR variabili
+int nor1 = porta_not(porta_or_3(A[0], and1, and2));
+int nor2 = porta_not(porta_or(and3, and4));
+int nor3 = porta_not(porta_or_3(A[1], and5, and6));
+int nor4 = porta_not(porta_or(and7, and8));
+int nor5 = porta_not(porta_or_3(A[2], and9, and10));
+int nor6 = porta_not(porta_or(and11, and12));
+int nor7 = porta_not(porta_or_3(A[3], and13, and14));
+int nor8 = porta_not(porta_or(and15, and16));
+
+// NAND e NOT intermedi
+int nand01 = porta_not(porta_and(Cn, neg1));
+int neg01 = porta_not(nor1);
+int and01 = porta_and(neg1, nor1);
+int and02 = porta_and_3(neg1, nor2, Cn);
+int neg02 = porta_not(nor3);
+int and03 = porta_and(neg1, nor3);
+int and04 = porta_and_3(neg1, nor1, nor4);
+int and05 = porta_and_4(neg1, Cn, nor2, nor4);
+int neg03 = porta_not(nor5);
+int and06 = porta_and(neg1, nor5);
+int and07 = porta_and_3(neg1, nor3, nor6);
+int and08 = porta_and_4(neg1, nor1, nor4, nor6);
+int and09 = porta_and_5(neg1, Cn, nor2, nor4, nor6);
+int neg04 = porta_not(nor7);
+int nand02 = porta_not(porta_and_4(nor2, nor4, nor6, nor8));
+int nand03 = porta_not(porta_and_5(Cn, nor2, nor4, nor6, nor8));
+int and010 = porta_and_4(nor1, nor4, nor6, nor8);
+int and011 = porta_and_3(nor3, nor6, nor8);
+int and012 = porta_and(nor5, nor8);
+
+int and001 = porta_and(neg01, nor2);
+int nor001 = porta_not(porta_or(and01, and02));
+int and002 = porta_and(neg02, nor4);
+int nor002 = porta_not(porta_or_3(and03, and04, and05));
+int and003 = porta_and(neg03, nor6);
+int nor003 = porta_not(porta_or_4(and06, and07, and08, and09));
+int and004 = porta_and(neg04, nor8);
+int nor004 = porta_not(porta_or_4(and010, and011, and012, nor7));
+
+// XOR finali per il risultato
+int exor0001 = porta_exor(nand01, and001);
+int exor0002 = porta_exor(nor001, and002);
+int exor0003 = porta_exor(nor002, and003);
+int exor0004 = porta_exor(nor003, and004);
+
+// Assegnazione finale degli output
+F[0] = exor0001;
+F[1] = exor0002;
+F[2] = exor0003;
+F[3] = exor0004;
+
+// Flag: A == B
+*A_uguale_B = porta_and_4(exor0001, exor0002, exor0003, exor0004);
+
+// P = nand02
+*P = nand02;
+
+// Carry out globale
+int not_nand03 = porta_not(nand03);
+int not_nor004 = porta_not(nor004);
+int or0001 = porta_or(not_nand03, not_nor004);
+*Cn_piu_4 = or0001;
+
+// G = nor004
+*G = nor004;
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════╗
@@ -687,8 +709,82 @@ void n_ALU74181(int Cn, int M, int A[4], int B[4], int S[4],
     fprintf(file_out, "║  - G       = %-3d                            ║\n", G);
     fprintf(file_out, "║                                             ║\n");
     fprintf(file_out, "╚═════════════════════════════════════════════╝\n");
+    
 
     fclose(file_out);
+    sleep(2);
+    stampa_tabella_verita_74181();
+}
+void stampa_tabella_verita_74181() {
+    printf("\n");
+    printf("╔════╦════╦════╦════╦════╦══════════════════════════════════════════════╗\n");
+    printf("║ S3 ║ S2 ║ S1 ║ S0 ║ Cn ║               Operazione ALU 74181           ║\n");
+    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
+
+    // Righe con Cn = 0
+    printf("║  0 ║  0 ║  0 ║  0 ║  0 ║ F = A - 1           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  1 ║  0 ║ F = -1              | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  0 ║  0 ║ F = A - B           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  1 ║  0 ║ F = A·B - 1         | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  1 ║  0 ║ F = A·B + 0         | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  1 ║  0 ║ F = A · B           | M = 0 (Aritmetico)     ║\n");
+
+    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
+
+    // Righe con Cn = 1
+    printf("║  0 ║  0 ║  0 ║  0 ║  1 ║ F = A - 1 + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  1 ║  1 ║ F = -1 + Cn         | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  0 ║  1 ║ F = A - B + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  1 ║  1 ║ F = A·B - 1 + Cn    | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  1 ║  1 ║ F = A·B + Cn        | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  1 ║  1 ║ F = A · B + Cn      | M = 0 (Aritmetico)     ║\n");
+
+    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
+
+    // Modalità logica (M = 1)
+    printf("║  0 ║  0 ║  0 ║  0 ║  X ║ F = A               | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  0 ║  0 ║  1 ║  X ║ F = AB              | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  0 ║  1 ║  0 ║  X ║ F = A + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  0 ║  1 ║  1 ║  X ║ F = 1               | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  0 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  0 ║  1 ║  X ║ F = A ⊕ B          | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  1 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  1 ║  1 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  0 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  0 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  1 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  1 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  0 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  0 ║  1 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  1 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  1 ║  1 ║  X ║ F = 0               | M = 1 (Logico)         ║\n");
+
+    printf("╚════╩════╩════╩════╩════╩══════════════════════════════════════════════╝\n\n");
+
+    printf("Simboli speciali:\n");
+    printf("• B̄ = NOT di B\n");
+    printf("• Ā = NOT di A\n");
+    printf("• X = Indifferente (non usato)\n");
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════════╗
