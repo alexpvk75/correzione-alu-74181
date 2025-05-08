@@ -57,17 +57,17 @@ d8'    88  88        88     88                 d8' 88   88  88  Y8' `8P  88
  ║                                                                              ║
  ║  Queste funzioni servono a convertire numeri:                                ║
  ║                                                                              ║
- ║  • binario_a_decimale:                                                       ║
+ ║  • BIN_DEC_DECODER:                                                          ║
  ║      Converte un numero formato da cifre binarie (0 e 1)                     ║
  ║      in un numero decimale.                                                  ║
  ║                                                                              ║
- ║  • decimale_a_binario:                                                       ║
+ ║  • DEC_BIN_CODER:                                                            ║
  ║      Converte un numero decimale in una rappresentazione                     ║
  ║      binaria (sequenza di bit rappresentata come intero).                    ║
  ║                                                                              ║
  ╚══════════════════════════════════════════════════════════════════════════════╝
  */
-int binario_a_decimale(int bin) {
+int BIN_DEC_DECODER(int bin) {
     int dec = 0, base = 1, resto;
     while (bin > 0) {
         resto = bin % 10;
@@ -75,10 +75,9 @@ int binario_a_decimale(int bin) {
         dec += resto * base;
         base *= 2;
     }
-    sleep(10);
     return dec;
 }
-int decimale_a_binario(int dec) {
+int DEC_BIN_CODER(int dec) {
     int bin = 0, base = 1, resto;
     while (dec > 0) {
         resto = dec % 2;
@@ -86,7 +85,6 @@ int decimale_a_binario(int dec) {
         bin += resto * base;
         base *= 10;
     }
-    sleep(10);
     return bin;
 }
 /*
@@ -115,7 +113,6 @@ void salva_in_memoria(int valore) {
     } else {
         printf("[!] Memoria piena!\n");
     }
-    sleep(10);
 }
 void attendi_un_ciclo_clock() {
     clock_t start_time = clock();
@@ -123,14 +120,12 @@ void attendi_un_ciclo_clock() {
     do {
         current_time = clock();
     } while ((current_time - start_time) < CLOCKS_PER_SEC / 1000);
-    sleep(10);
 }
 void stampa_memoria() {
     printf("Contenuto della memoria:\n");
     for (int i = 0; i < indice_memoria; i++) {
         printf("Memoria[%d] = %-3d\n", i, memoria[i]);
     }
-    sleep(10);
 }
 /*
  ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -228,7 +223,7 @@ int porta_exor_5(int a, int b, int c, int d, int e) {
  ║                                                                              ║
  ╚══════════════════════════════════════════════════════════════════════════════╝
  */
-void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
+void n_ALU74181(int Cn, int M, int A[4], int B[4], int S[4],
                          int F[4], int *A_uguale_B, int *P, int *Cn_piu_4, int *G) {
     int neg1 = porta_not(M);
     int neg2 = porta_not(B[0]);
@@ -314,7 +309,7 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
  ║                                                                                    ║
  ║  Per ogni segnale viene controllato, tramite if annidati, che il valore sia 0 o 1. ║
  ║  Successivamente, vengono creati gli array A, B e S e chiamata la funzione         ║
- ║  alu_74181_calcola() per eseguire il calcolo.                                      ║
+ ║  n_ALU74181() per eseguire il calcolo.                                      ║
  ║  Infine, vengono stampati i risultati e un flag (es. Cn_piu_4) viene salvato in    ║
  ║  memoria.                                                                          ║
  ║                                                                                    ║
@@ -652,7 +647,7 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
     int F[4];
     int A_uguale_B, P, Cn_piu_4, G;
 
-    alu_74181_calcola(Cn, M, A, B, S, F, &A_uguale_B, &P, &Cn_piu_4, &G);
+    n_ALU74181(Cn, M, A, B, S, F, &A_uguale_B, &P, &Cn_piu_4, &G);
 
     // Output dei risultati
     printf("\n");
@@ -694,7 +689,6 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
     fprintf(file_out, "╚═════════════════════════════════════════════╝\n");
 
     fclose(file_out);
-    sleep(10);
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════════╗
@@ -709,7 +703,7 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
  ║       i moduli.                                                                        ║
  ║    3. Il codice estrae da ciascun operando i nibble (gruppi di 4 bit), partendo dal    ║
  ║       nibble meno significativo fino al nibble più significativo.                      ║
- ║    4. Per ogni nibble viene chiamata la funzione alu_74181_calcola() passando il       ║
+ ║    4. Per ogni nibble viene chiamata la funzione n_ALU74181() passando il       ║
  ║       carry in attuale; il risultato (4 bit) viene poi combinato nel risultato finale  ║
  ║       a 32 bit.                                                                        ║
  ║    5. Il carry out (Cn_piu_4) del modulo corrente viene propagato come carry in per    ║
@@ -718,7 +712,7 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
  ║                                                                                        ║
  ╚════════════════════════════════════════════════════════════════════════════════════════╝
  */
- void alu_pipo_8() {
+ void ALU32() {
     unsigned int operandoA, operandoB;
     int Cn, M;
     int S[4];
@@ -747,14 +741,13 @@ void alu_74181_calcola(int Cn, int M, int A[4], int B[4], int S[4],
             Abits[bit] = (operandoA >> (nibble * 4 + bit)) & 1;
             Bbits[bit] = (operandoB >> (nibble * 4 + bit)) & 1;
         }
-        alu_74181_calcola(currentCn, M, Abits, Bbits, S, F, &A_uguale_B, &P, &Cn_piu_4, &G);
+        n_ALU74181(currentCn, M, Abits, Bbits, S, F, &A_uguale_B, &P, &Cn_piu_4, &G);
         unsigned int nibbleResult = (F[0] << 0) | (F[1] << 1) | (F[2] << 2) | (F[3] << 3);
         result |= (nibbleResult << (nibble * 4));
         currentCn = Cn_piu_4;
     }
     printf("Risultato ALU PIPO a 32 bit (decimale): %u\n", result);
     salva_in_memoria(result);
-    sleep(10);
 }
 /*
  ╔════════════════════════════════════════════════════════════════════════════════════╗
@@ -836,7 +829,6 @@ void operazioni_algebriche() {
     } else {
         printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║ Numero di elementi non valido. ║\n║      Scegli tra 2 oppure 3     ║\n║                                ║\n╚════════════════════════════════╝\n");
     }
-    sleep(10);
 }
 
 void misura_ciclo_clock() {
@@ -903,7 +895,6 @@ void misura_ciclo_clock() {
     printf("\nSimulazione completata.\n");
     printf("Un ciclo di clock richiede circa 1 millisecondo in questa simulazione.\n");
     printf("Questo è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
-    sleep(10);
     return;
 }
 /*
@@ -962,17 +953,17 @@ int main() {
             int bin;
             printf(">> Inserisci un numero binario: ");
             scanf("%d", &bin);
-            printf("Risultato (decimale): %d\n", binario_a_decimale(bin));
+            printf("Risultato (decimale): %d\n", BIN_DEC_DECODER(bin));
         } else if (scelta == 5) {
             int dec;
             printf(">> Inserisci un numero decimale: ");
             scanf("%d", &dec);
-            printf("Risultato (binario): %d\n", decimale_a_binario(dec));
+            printf("Risultato (binario): %d\n", DEC_BIN_CODER(dec));
         } else if (scelta == 6) {
-            alu_pipo_8();
+            ALU32();
         } else if (scelta == 7) {
             attendi_un_ciclo_clock();
-            alu_pipo_8();
+            ALU32();
         } else if (scelta == 8) {
             stampa_memoria();
         } else if (scelta == 9) {
@@ -980,6 +971,7 @@ int main() {
         } else {
             printf("Scelta non valida!\n");
         }
+        sleep(10);
     }
 
     return 0;
