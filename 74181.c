@@ -50,23 +50,7 @@ d8'    88  88        88     88                 d8' 88   88  88  Y8' `8P  88
 #include <time.h>
 #include <ctype.h>
 #include <unistd.h>
-/*
- ╔══════════════════════════════════════════════════════════════════════════════╗
- ║                               ⇨ CONVERSIONI ⇦                                ║
- ╠══════════════════════════════════════════════════════════════════════════════╣
- ║                                                                              ║
- ║  Queste funzioni servono a convertire numeri:                                ║
- ║                                                                              ║
- ║  • BIN_DEC_DECODER:                                                          ║
- ║      Converte un numero formato da cifre binarie (0 e 1)                     ║
- ║      in un numero decimale.                                                  ║
- ║                                                                              ║
- ║  • DEC_BIN_CODER:                                                            ║
- ║      Converte un numero decimale in una rappresentazione                     ║
- ║      binaria (sequenza di bit rappresentata come intero).                    ║
- ║                                                                              ║
- ╚══════════════════════════════════════════════════════════════════════════════╝
- */
+
 int BIN_DEC_DECODER(int bin) {
     int dec = 0, base = 1, resto;
     while (bin > 0) {
@@ -87,24 +71,7 @@ int DEC_BIN_CODER(int dec) {
     }
     return bin;
 }
-/*
- ╔══════════════════════════════════════════════════════════════════════════════╗
- ║                                ⇨ MEMORIA ⇦                                   ║
- ╠══════════════════════════════════════════════════════════════════════════════╣
- ║                                                                              ║
- ║ Queste variabili e funzioni gestiscono la "memoria"                          ║
- ║ in cui salvare i risultati:                                                  ║
- ║                                                                              ║
- ║  • memoria: array globale per contenere fino a 10 valori.                    ║
- ║  • indice_memoria: indice per inserire un nuovo valore.                      ║
- ║                                                                              ║
- ║ Le funzioni:                                                                 ║
- ║  • salva_in_memoria: salva un nuovo risultato, se c'è                        ║
- ║    spazio disponibile.                                                       ║
- ║  • stampa_memoria: mostra a video tutti i risultati.                         ║
- ║                                                                              ║
- ╚══════════════════════════════════════════════════════════════════════════════╝
- */
+
 int memoria[10];
 int indice_memoria = 0;
 void salva_in_memoria(int valore) {
@@ -127,23 +94,6 @@ void stampa_memoria() {
         printf("Memoria[%d] = %-3d\n", i, memoria[i]);
     }
 }
-/*
- ╔══════════════════════════════════════════════════════════════════════════════╗
- ║                            ⇨ PORTE LOGICHE ⇦                                 ║
- ╠══════════════════════════════════════════════════════════════════════════════╣
- ║                                                                              ║
- ║  Queste funzioni simulano le porte logiche fondamentali usate nell'ALU:      ║
- ║                                                                              ║
- ║  • porta_not: inverte il segnale (0 diventa 1, 1 diventa 0).                 ║
- ║  • porta_and: esegue l'AND sui due input.                                    ║
- ║  • porta_or: esegue l'OR sui due input.                                      ║
- ║  • porta_exor: esegue l'operazione XOR (somma modulo 2).                     ║
- ║                                                                              ║
- ║  Sono inoltre definite versioni che combinano 3, 4 o 5 ingressi              ║
- ║  (es. porta_or_3, porta_and_4, ecc.) per semplificare operazioni logiche.    ║
- ║                                                                              ║
- ╚══════════════════════════════════════════════════════════════════════════════╝
- */
 // Porta logica NOT
 int porta_not(int a) { 
     return 1 - a; 
@@ -201,28 +151,7 @@ int porta_exor_5(int a, int b, int c, int d, int e) {
     int tmp = porta_exor_4(a, b, c, d);
     return porta_exor(tmp, e);
 }
-/*
- ╔══════════════════════════════════════════════════════════════════════════════╗
- ║                   ⇨ FUNZIONE ALU 74181 PER UN NIBBLE ⇦                       ║
- ╠══════════════════════════════════════════════════════════════════════════════╣
- ║                                                                              ║
- ║  Questa funzione simula il funzionamento di una ALU 74181 su 4 bit (nibble). ║
- ║                                                                              ║
- ║  Parametri:                                                                  ║
- ║    • Cn       : Carry in iniziale.                                           ║
- ║    • M        : Modalità (logica o aritmetica).                              ║
- ║    • A[4]     : Array dei 4 bit dell’operando A (bit 0 = LSB, bit 3 = MSB).  ║
- ║    • B[4]     : Array dei 4 bit dell’operando B.                             ║
- ║    • S[4]     : Array dei segnali di selezione dell’operazione.              ║
- ║                                                                              ║
- ║  Output:                                                                     ║
- ║    • F[4]     : Array con i 4 bit del risultato.                             ║
- ║    • A_uguale_B, P, Cn_piu_4, G: Flag derivati dalla logica interna ALU.     ║
- ║                                                                              ║
- ║  La funzione riproduce i calcoli logici usando porte AND, OR, NOT ed XOR.    ║
- ║                                                                              ║
- ╚══════════════════════════════════════════════════════════════════════════════╝
- */
+
 void n_ALU74181(int Cn, int M, int A[4], int B[4], int S[4],
     int F[4], int *A_uguale_B, int *P, int *Cn_piu_4, int *G) {
 // Negazioni iniziali
@@ -317,26 +246,68 @@ int or0001 = porta_or(not_nand03, not_nor004);
 // G = nor004
 *G = nor004;
 }
-/*
- ╔════════════════════════════════════════════════════════════════════════════════════╗
- ║                    ⇨ SIMULAZIONE ALU 74181 (MODULO SINGOLO) ⇦                      ║
- ╠════════════════════════════════════════════════════════════════════════════════════╣
- ║                                                                                    ║
- ║  Questa funzione chiede all’utente di inserire i segnali (0 o 1) per:              ║
- ║    • Carry in (Cn)                                                                 ║
- ║    • Modalità (M)                                                                  ║
- ║    • I 4 bit dell’operando A (A0, A1, A2, A3)                                      ║
- ║    • I 4 bit dell’operando B (B0, B1, B2, B3)                                      ║
- ║    • I 4 bit di selezione dell’operazione (S0, S1, S2, S3)                         ║
- ║                                                                                    ║
- ║  Per ogni segnale viene controllato, tramite if annidati, che il valore sia 0 o 1. ║
- ║  Successivamente, vengono creati gli array A, B e S e chiamata la funzione         ║
- ║  n_ALU74181() per eseguire il calcolo.                                      ║
- ║  Infine, vengono stampati i risultati e un flag (es. Cn_piu_4) viene salvato in    ║
- ║  memoria.                                                                          ║
- ║                                                                                    ║
- ╚════════════════════════════════════════════════════════════════════════════════════╝
- */
+
+void stampa_tabella_verita_74181() {
+    printf("\n");
+    printf("╔════╦════╦════╦════╦════╦══════════════════════════════════════════════╗\n");
+    printf("║ S3 ║ S2 ║ S1 ║ S0 ║ Cn ║               Operazione ALU 74181           ║\n");
+    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
+    printf("║  0 ║  0 ║  0 ║  0 ║  0 ║ F = A - 1           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  1 ║  0 ║ F = -1              | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  0 ║  0 ║ F = A - B           | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  1 ║  0 ║ F = A·B - 1         | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  1 ║  0 ║ F = A·B + 0         | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  1 ║  0 ║ F = A · B           | M = 0 (Aritmetico)     ║\n");
+    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
+    printf("║  0 ║  0 ║  0 ║  0 ║  1 ║ F = A - 1 + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  0 ║  1 ║  1 ║  1 ║ F = -1 + Cn         | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  0 ║  1 ║ F = A - B + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  0 ║  1 ║  1 ║  1 ║  1 ║ F = A·B - 1 + Cn    | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  0 ║  1 ║  1 ║  1 ║ F = A·B + Cn        | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("║  1 ║  1 ║  1 ║  1 ║  1 ║ F = A · B + Cn      | M = 0 (Aritmetico)     ║\n");
+    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
+    printf("║  0 ║  0 ║  0 ║  0 ║  X ║ F = A               | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  0 ║  0 ║  1 ║  X ║ F = AB              | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  0 ║  1 ║  0 ║  X ║ F = A + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  0 ║  1 ║  1 ║  X ║ F = 1               | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  0 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  0 ║  1 ║  X ║ F = A ⊕ B           | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  1 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
+    printf("║  0 ║  1 ║  1 ║  1 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  0 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  0 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  1 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  0 ║  1 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  0 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  0 ║  1 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  1 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
+    printf("║  1 ║  1 ║  1 ║  1 ║  X ║ F = 0               | M = 1 (Logico)         ║\n");
+    printf("╚════╩════╩════╩════╩════╩══════════════════════════════════════════════╝\n\n");
+    printf("Simboli speciali:\n");
+    printf("• B̄ = NOT di B\n");
+    printf("• Ā = NOT di A\n");
+    printf("• X = Indifferente (non usato)\n");
+}
 
  void simula_alu_74181() {
     int Cn, M, A0, B0, A1, B1, A2, B2, A3, B3, S0, S1, S2, S3;
@@ -715,99 +686,7 @@ int or0001 = porta_or(not_nand03, not_nor004);
     sleep(2);
     stampa_tabella_verita_74181();
 }
-void stampa_tabella_verita_74181() {
-    printf("\n");
-    printf("╔════╦════╦════╦════╦════╦══════════════════════════════════════════════╗\n");
-    printf("║ S3 ║ S2 ║ S1 ║ S0 ║ Cn ║               Operazione ALU 74181           ║\n");
-    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
 
-    // Righe con Cn = 0
-    printf("║  0 ║  0 ║  0 ║  0 ║  0 ║ F = A - 1           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  1 ║  0 ║ F = -1              | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  0 ║  0 ║ F = A - B           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  1 ║  0 ║ F = A·B - 1         | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  1 ║  0 ║ F = A·B + 0         | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  1 ║  0 ║ F = A · B           | M = 0 (Aritmetico)     ║\n");
-
-    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
-
-    // Righe con Cn = 1
-    printf("║  0 ║  0 ║  0 ║  0 ║  1 ║ F = A - 1 + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  1 ║  1 ║ F = -1 + Cn         | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  0 ║  1 ║ F = A - B + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  1 ║  1 ║ F = A·B - 1 + Cn    | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  1 ║  1 ║ F = A·B + Cn        | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  1 ║  1 ║ F = A · B + Cn      | M = 0 (Aritmetico)     ║\n");
-
-    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
-
-    // Modalità logica (M = 1)
-    printf("║  0 ║  0 ║  0 ║  0 ║  X ║ F = A               | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  0 ║  0 ║  1 ║  X ║ F = AB              | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  0 ║  1 ║  0 ║  X ║ F = A + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  0 ║  1 ║  1 ║  X ║ F = 1               | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  0 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  0 ║  1 ║  X ║ F = A ⊕ B          | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  1 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  1 ║  1 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  0 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  0 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  1 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  1 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  0 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  0 ║  1 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  1 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  1 ║  1 ║  X ║ F = 0               | M = 1 (Logico)         ║\n");
-
-    printf("╚════╩════╩════╩════╩════╩══════════════════════════════════════════════╝\n\n");
-
-    printf("Simboli speciali:\n");
-    printf("• B̄ = NOT di B\n");
-    printf("• Ā = NOT di A\n");
-    printf("• X = Indifferente (non usato)\n");
-}
-/*
- ╔════════════════════════════════════════════════════════════════════════════════════════╗
- ║                     ⇨ ALU IN MODALITÀ PIPO (8 MODULI IN CASCATA) ⇦                     ║
- ╠════════════════════════════════════════════════════════════════════════════════════════╣
- ║                                                                                        ║
- ║  Questa funzione simula una ALU a 32 bit realizzata mediante 8 moduli ALU 74181,       ║
- ║  ciascuno a 4 bit (nibble). Funziona come segue:                                       ║
- ║                                                                                        ║
- ║    1. L’utente inserisce due operandi a 32 bit (in formato decimale).                  ║
- ║    2. L’utente inserisce i segnali comuni (Cn, M e S0-S3) da utilizzare per tutti      ║
- ║       i moduli.                                                                        ║
- ║    3. Il codice estrae da ciascun operando i nibble (gruppi di 4 bit), partendo dal    ║
- ║       nibble meno significativo fino al nibble più significativo.                      ║
- ║    4. Per ogni nibble viene chiamata la funzione n_ALU74181() passando il       ║
- ║       carry in attuale; il risultato (4 bit) viene poi combinato nel risultato finale  ║
- ║       a 32 bit.                                                                        ║
- ║    5. Il carry out (Cn_piu_4) del modulo corrente viene propagato come carry in per    ║
- ║       il modulo successivo.                                                            ║
- ║    6. Infine, il risultato finale viene stampato e salvato in memoria.                 ║
- ║                                                                                        ║
- ╚════════════════════════════════════════════════════════════════════════════════════════╝
- */
  void ALU32() {
     unsigned int operandoA, operandoB;
     int Cn, M;
@@ -845,24 +724,7 @@ void stampa_tabella_verita_74181() {
     printf("Risultato ALU PIPO a 32 bit (decimale): %u\n", result);
     salva_in_memoria(result);
 }
-/*
- ╔════════════════════════════════════════════════════════════════════════════════════╗
- ║                              ⇨ OPERAZIONI ALGEBRICHE ⇦                             ║
- ╠════════════════════════════════════════════════════════════════════════════════════╣
- ║                                                                                    ║
- ║  Queste funzioni implementano le operazioni aritmetiche di base:                   ║
- ║                                                                                    ║
- ║  • somma: restituisce la somma di due numeri.                                      ║
- ║  • sottrazione: restituisce la differenza tra due numeri.                          ║
- ║  • moltiplicazione: restituisce il prodotto di due numeri.                         ║
- ║  • divisione: restituisce il quoziente, con controllo per la divisione per 0.      ║
- ║                                                                                    ║
- ║  La funzione operazioni_algebriche() permette all'utente di scegliere:             ║
- ║    • Operazioni su 2 elementi: somma, sottrazione, moltiplicazione, divisione.     ║
- ║    • Operazioni su 3 elementi: supporta somma o moltiplicazione.                   ║
- ║                                                                                    ║
- ╚════════════════════════════════════════════════════════════════════════════════════╝
- */
+
  int somma(int a, int b) {
     return a + b;
 }
@@ -880,53 +742,163 @@ void operazioni_algebriche() {
     int num_elementi;
     printf(">> Quanti elementi vuoi utilizzare (2 o 3)? ");
     scanf("%d", &num_elementi);
+
     if (num_elementi == 2) {
         int a, b;
         printf(">> Inserisci i due numeri: ");
         scanf("%d %d", &a, &b);
+
         char operazione[20];
-        printf(">> Scegli l'operazione (somma, sottrazione, moltiplicazione, divisione): ");
+        printf(">> Scegli l'operazione (1 - Somma, 2 - Sottrazione, 3 - Moltiplicazione, 4 - Divisione): ");
         scanf("%s", operazione);
-        if (strcmp(operazione, "somma") == 0) {
-            int res = somma(a, b);
-            printf("╔════════════════════════════════╗\n║         SOMMA ALGEBRICA        ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
-            salva_in_memoria(res);
-        } else if (strcmp(operazione, "sottrazione") == 0) {
-            int res = sottrazione(a, b);
-            printf("╔════════════════════════════════╗\n║      SOTTRAZIONE ALGEBRICA     ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
-            salva_in_memoria(res);
-        } else if (strcmp(operazione, "moltiplicazione") == 0) {
-            int res = moltiplicazione(a, b);
-            printf("╔════════════════════════════════╗\n║    MOLTIPLICAZIONE ALGEBRICA   ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
-            salva_in_memoria(res);
-        } else if (strcmp(operazione, "divisione") == 0) {
-            int res = divisione(a, b);
-            printf("╔════════════════════════════════╗\n║        DIVISIONE ALGEBRICA     ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
-            salva_in_memoria(res);
-        } else { printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Operazione non riconosciuta  ║\n║                                ║\n╚════════════════════════════════╝\n"); }
+
+        int scelta = 0;
+
+        // Verifica se è stato inserito un numero
+        if (strlen(operazione) == 1 && isdigit(operazione[0])) {
+            scelta = operazione[0] - '0';
+        } else {
+            // Converte in minuscolo per confronto case-insensitive
+            for (int i = 0; operazione[i]; i++) {
+                operazione[i] = tolower(operazione[i]);
+            }
+
+            if (strcmp(operazione, "somma") == 0)
+                scelta = 1;
+            else if (strcmp(operazione, "sottrazione") == 0)
+                scelta = 2;
+            else if (strcmp(operazione, "moltiplicazione") == 0)
+                scelta = 3;
+            else if (strcmp(operazione, "divisione") == 0)
+                scelta = 4;
+        }
+
+        switch (scelta) {
+            case 1:
+                if (strcmp(operazione, "somma") != 0) break; // solo per sicurezza
+                {
+                    int res = somma(a, b);
+                    printf("╔════════════════════════════════╗\n"
+                           "║         SOMMA ALGEBRICA        ║\n"
+                           "╚════════════════════════════════╝\n"
+                           "Risultato: %d\n", res);
+                    salva_in_memoria(res);
+                }
+                break;
+            case 2:
+                {
+                    int res = sottrazione(a, b);
+                    printf("╔════════════════════════════════╗\n"
+                           "║      SOTTRAZIONE ALGEBRICA     ║\n"
+                           "╚════════════════════════════════╝\n"
+                           "Risultato: %d\n", res);
+                    salva_in_memoria(res);
+                }
+                break;
+            case 3:
+                {
+                    int res = moltiplicazione(a, b);
+                    printf("╔════════════════════════════════╗\n"
+                           "║    MOLTIPLICAZIONE ALGEBRICA   ║\n"
+                           "╚════════════════════════════════╝\n"
+                           "Risultato: %d\n", res);
+                    salva_in_memoria(res);
+                }
+                break;
+            case 4:
+                {
+                    if (b == 0) {
+                        printf("Errore: divisione per zero.\n");
+                    } else {
+                        int res = divisione(a, b);
+                        printf("╔════════════════════════════════╗\n"
+                               "║        DIVISIONE ALGEBRICA     ║\n"
+                               "╚════════════════════════════════╝\n"
+                               "Risultato: %d\n", res);
+                        salva_in_memoria(res);
+                    }
+                }
+                break;
+            default:
+                printf("╔════════════════════════════════╗\n"
+                       "║             ERRORE             ║\n"
+                       "╠════════════════════════════════╣\n"
+                       "║                                ║\n"
+                       "║   Operazione non riconosciuta  ║\n"
+                       "║                                ║\n"
+                       "╚════════════════════════════════╝\n");
+                return;
+        }
+
     } else if (num_elementi == 3) {
         int a, b, c;
         printf(">> Inserisci i tre numeri: ");
         scanf("%d %d %d", &a, &b, &c);
+
         char operazione[20];
         printf(">> Scegli l'operazione (somma o moltiplicazione): ");
         scanf("%s", operazione);
-        if (strcmp(operazione, "somma") == 0) {
-            int res = somma(somma(a, b), c);
-            printf("╔════════════════════════════════╗\n║         SOMMA ALGEBRICA        ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
-            salva_in_memoria(res);
-        } else if (strcmp(operazione, "moltiplicazione") == 0) {
-            int res = moltiplicazione(moltiplicazione(a, b), c);
-            printf("╔════════════════════════════════╗\n║    MOLTIPLICAZIONE ALGEBRICA   ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
-            salva_in_memoria(res);
+
+        int scelta = 0;
+
+        // Verifica se è stato inserito un numero
+        if (strlen(operazione) == 1 && isdigit(operazione[0])) {
+            scelta = operazione[0] - '0';
         } else {
-            printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Operazione non riconosciuta  ║\n║                                ║\n╚════════════════════════════════╝\n");
+            // Converte in minuscolo per confronto case-insensitive
+            for (int i = 0; operazione[i]; i++) {
+                operazione[i] = tolower(operazione[i]);
+            }
+
+            if (strcmp(operazione, "somma") == 0)
+                scelta = 1;
+            else if (strcmp(operazione, "moltiplicazione") == 0)
+                scelta = 3;
         }
+
+        switch (scelta) {
+            case 1:
+                {
+                    int res = somma(somma(a, b), c);
+                    printf("╔════════════════════════════════╗\n"
+                           "║         SOMMA ALGEBRICA        ║\n"
+                           "╚════════════════════════════════╝\n"
+                           "Risultato: %d\n", res);
+                    salva_in_memoria(res);
+                }
+                break;
+            case 3:
+                {
+                    int res = moltiplicazione(moltiplicazione(a, b), c);
+                    printf("╔════════════════════════════════╗\n"
+                           "║    MOLTIPLICAZIONE ALGEBRICA   ║\n"
+                           "╚════════════════════════════════╝\n"
+                           "Risultato: %d\n", res);
+                    salva_in_memoria(res);
+                }
+                break;
+            default:
+                printf("╔════════════════════════════════╗\n"
+                       "║             ERRORE             ║\n"
+                       "╠════════════════════════════════╣\n"
+                       "║                                ║\n"
+                       "║   Operazione non riconosciuta  ║\n"
+                       "║                                ║\n"
+                       "╚════════════════════════════════╝\n");
+                return;
+        }
+
     } else {
-        printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║ Numero di elementi non valido. ║\n║      Scegli tra 2 oppure 3     ║\n║                                ║\n╚════════════════════════════════╝\n");
+        printf("╔════════════════════════════════╗\n"
+               "║             ERRORE             ║\n"
+               "╠════════════════════════════════╣\n"
+               "║                                ║\n"
+               "║ Numero di elementi non valido. ║\n"
+               "║      Scegli tra 2 oppure 3     ║\n"
+               "║                                ║\n"
+               "╚════════════════════════════════╝\n");
     }
 }
-
 void misura_ciclo_clock() {
     printf("Rilevamento sistema in corso...\n");
     char *sistema = "Sconosciuto";
@@ -993,27 +965,7 @@ void misura_ciclo_clock() {
     printf("Questo è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
     return;
 }
-/*
- ╔════════════════════════════════════════════════════════════════════════════════════╗
- ║                                ⇨ FUNZIONE MAIN ⇦                                   ║
- ╠════════════════════════════════════════════════════════════════════════════════════╣
- ║                                                                                    ║
- ║  Il menu principale offre le varie funzionalità:                                   ║
- ║                                                                                    ║
- ║    1. Operazioni Logiche (simulazione di un modulo ALU 74181 singolo).             ║
- ║    2. Operazioni Algebriche.                                                       ║
- ║    3. Convertitore Binario -> Decimale.                                            ║
- ║    4. Convertitore Decimale -> Binario.                                            ║
- ║    5. ALU in Modalità PIPO: simulazione di una ALU a 32 bit composta da 8 moduli   ║
- ║       74181 (4 bit ciascuno).                                                      ║
- ║    6. Visualizza Memoria: visualizza i risultati salvati nella memoria.            ║
- ║    0. Esci: termina il programma.                                                  ║
- ║                                                                                    ║
- ║  Ogni scelta viene gestita tramite if annidati (non usando operatori composti)     ║
- ║  come richiesto.                                                                   ║
- ║                                                                                    ║
- ╚════════════════════════════════════════════════════════════════════════════════════╝
- */
+
 int main() {
     int scelta;
 
