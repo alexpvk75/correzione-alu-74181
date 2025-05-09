@@ -51,25 +51,36 @@ d8'    88  88        88     88                 d8' 88   88  88  Y8' `8P  88
 #include <ctype.h>
 #include <unistd.h>
 
-int BIN_DEC_DECODER(int bin) {
-    int dec = 0, base = 1, resto;
-    while (bin > 0) {
-        resto = bin % 10;
-        bin = bin / 10;
-        dec += resto * base;
-        base *= 2;
+int BIN_DEC_DECODER(const char *binario) {
+    int decimale = 0;
+    int lunghezza = strlen(binario);
+    for ( int i = 0; i < lunghezza; i++) {
+        if (binario[i] == '1') {
+            decimale = decimale * 2 + 1;
+        } else if ( binario[i] == '0') {
+            decimale = decimale * 2;
+        } else {
+            printf("Input non valido. Solo 0 e 1 sono accettati.\n");
+            return -1;
+        }
     }
-    return dec;
+    return decimale;
 }
-int DEC_BIN_CODER(int dec) {
-    int bin = 0, base = 1, resto;
-    while (dec > 0) {
-        resto = dec % 2;
-        dec = dec / 2;
-        bin += resto * base;
-        base *= 10;
+int DEC_BIN_CODER(int numero) {
+    int binario[32];
+    int i = 0;
+    if (numero == 0) {
+        printf("0");
+        return;
     }
-    return bin;
+    while (numero > 0) {
+        binario[i] = numero % 2;
+        numero = numero / 2;
+        i++;
+    }
+    for (int j = i - 1; j >= 0; j--) {
+        printf("%d", binario[j]);
+    }
 }
 
 int memoria[10];
@@ -998,7 +1009,7 @@ int main() {
         } else if (scelta == 3) {
             operazioni_algebriche();
         } else if (scelta == 4) {
-            int bin;
+            char bin[33];
             printf(">> Inserisci un numero binario: ");
             scanf("%d", &bin);
             printf("Risultato (decimale): %d\n", BIN_DEC_DECODER(bin));
@@ -1019,7 +1030,7 @@ int main() {
         } else {
             printf("Scelta non valida!\n");
         }
-        sleep(10);
+        sleep(6);
     }
 
     return 0;
