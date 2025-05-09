@@ -1011,7 +1011,7 @@ int main() {
         } else if (scelta == 4) {
             char bin[33];
             printf(">> Inserisci un numero binario: ");
-            scanf("%d", &bin);
+            scanf("%32s", bin);
             printf("Risultato (decimale): %d\n", BIN_DEC_DECODER(bin));
         } else if (scelta == 5) {
             int dec;
