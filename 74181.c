@@ -21,7 +21,7 @@ int BIN_DEC_DECODER(const char *binario) {
     return decimale;
 }
 int DEC_BIN_CODER(int numero) {
-    int binario[32];
+    int binario[33];
     int i = 0;
     if (numero == 0) {
         printf("0");
@@ -192,64 +192,7 @@ int or0001 = porta_or(not_nand03, not_nor004);
 }
 void stampa_tabella_verita_74181() {
     printf("\n");
-    printf("╔════╦════╦════╦════╦════╦══════════════════════════════════════════════╗\n");
-    printf("║ S3 ║ S2 ║ S1 ║ S0 ║ Cn ║               Operazione ALU 74181           ║\n");
-    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
-    printf("║  0 ║  0 ║  0 ║  0 ║  0 ║ F = A - 1           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  1 ║  0 ║ F = -1              | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  0 ║  0 ║ F = A - B           | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  1 ║  0 ║ F = A·B - 1         | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  1 ║  0 ║ F = A·B + 0         | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  1 ║  0 ║ F = A · B           | M = 0 (Aritmetico)     ║\n");
-    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
-    printf("║  0 ║  0 ║  0 ║  0 ║  1 ║ F = A - 1 + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  0 ║  1 ║  1 ║  1 ║ F = -1 + Cn         | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  0 ║  1 ║ F = A - B + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  0 ║  1 ║  1 ║  1 ║  1 ║ F = A·B - 1 + Cn    | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  0 ║  1 ║  1 ║  1 ║ F = A·B + Cn        | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("║  1 ║  1 ║  1 ║  1 ║  1 ║ F = A · B + Cn      | M = 0 (Aritmetico)     ║\n");
-    printf("╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n");
-    printf("║  0 ║  0 ║  0 ║  0 ║  X ║ F = A               | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  0 ║  0 ║  1 ║  X ║ F = AB              | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  0 ║  1 ║  0 ║  X ║ F = A + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  0 ║  1 ║  1 ║  X ║ F = 1               | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  0 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  0 ║  1 ║  X ║ F = A ⊕ B           | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  1 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
-    printf("║  0 ║  1 ║  1 ║  1 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  0 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  0 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  1 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  0 ║  1 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  0 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  0 ║  1 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  1 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n");
-    printf("║  1 ║  1 ║  1 ║  1 ║  X ║ F = 0               | M = 1 (Logico)         ║\n");
-    printf("╚════╩════╩════╩════╩════╩══════════════════════════════════════════════╝\n\n");
-    printf("Simboli speciali:\n");
-    printf("• B̄ = NOT di B\n");
-    printf("• Ā = NOT di A\n");
-    printf("• X = Indifferente (non usato)\n");
+    printf("╔════╦════╦════╦════╦════╦══════════════════════════════════════════════╗\n║ S3 ║ S2 ║ S1 ║ S0 ║ Cn ║               Operazione ALU 74181           ║\n╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n║  0 ║  0 ║  0 ║  0 ║  0 ║ F = A - 1           | M = 0 (Aritmetico)     ║\n║  0 ║  0 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n║  0 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n║  0 ║  0 ║  1 ║  1 ║  0 ║ F = -1              | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  0 ║  1 ║  0 ║ F = A + B           | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  1 ║  0 ║  0 ║ F = A - B           | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  1 ║  1 ║  0 ║ F = A·B - 1         | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  1 ║  1 ║  0 ║ F = A·B + 0         | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  0 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  0 ║  1 ║  0 ║ F = A + B̄ + 0       | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  1 ║  0 ║  0 ║ F = A + B̄           | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  1 ║  1 ║  0 ║ F = A · B           | M = 0 (Aritmetico)     ║\n╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n║  0 ║  0 ║  0 ║  0 ║  1 ║ F = A - 1 + Cn      | M = 0 (Aritmetico)     ║\n║  0 ║  0 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n║  0 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  0 ║  0 ║  1 ║  1 ║  1 ║ F = -1 + Cn         | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  0 ║  1 ║  1 ║ F = A + B + Cn      | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  1 ║  0 ║  1 ║ F = A - B + Cn      | M = 0 (Aritmetico)     ║\n║  0 ║  1 ║  1 ║  1 ║  1 ║ F = A·B - 1 + Cn    | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  1 ║  0 ║  1 ║  1 ║  1 ║ F = A·B + Cn        | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  0 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  0 ║  1 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  1 ║  0 ║  1 ║ F = A + B̄ + Cn      | M = 0 (Aritmetico)     ║\n║  1 ║  1 ║  1 ║  1 ║  1 ║ F = A · B + Cn      | M = 0 (Aritmetico)     ║\n╠════╬════╬════╬════╬════╬══════════════════════════════════════════════╣\n║  0 ║  0 ║  0 ║  0 ║  X ║ F = A               | M = 1 (Logico)         ║\n║  0 ║  0 ║  0 ║  1 ║  X ║ F = AB              | M = 1 (Logico)         ║\n║  0 ║  0 ║  1 ║  0 ║  X ║ F = A + B̄           | M = 1 (Logico)         ║\n║  0 ║  0 ║  1 ║  1 ║  X ║ F = 1               | M = 1 (Logico)         ║\n║  0 ║  1 ║  0 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n║  0 ║  1 ║  0 ║  1 ║  X ║ F = A ⊕ B           | M = 1 (Logico)         ║\n║  0 ║  1 ║  1 ║  0 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n║  0 ║  1 ║  1 ║  1 ║  X ║ F = A · B̄           | M = 1 (Logico)         ║\n║  1 ║  0 ║  0 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n║  1 ║  0 ║  0 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n║  1 ║  0 ║  1 ║  0 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n║  1 ║  0 ║  1 ║  1 ║  X ║ F = Ā               | M = 1 (Logico)         ║\n║  1 ║  1 ║  0 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n║  1 ║  1 ║  0 ║  1 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n║  1 ║  1 ║  1 ║  0 ║  X ║ F = Ā + B̄           | M = 1 (Logico)         ║\n║  1 ║  1 ║  1 ║  1 ║  X ║ F = 0               | M = 1 (Logico)         ║\n╚════╩════╩════╩════╩════╩══════════════════════════════════════════════╝\n\nSimboli speciali:\n• B̄ = NOT di B\n• Ā = NOT di A\n• X = Indifferente (non usato)\n");
 }
  void simula_alu_74181() {
     int Cn, M, A0, B0, A1, B1, A2, B2, A3, B3, S0, S1, S2, S3;
@@ -426,39 +369,17 @@ void stampa_tabella_verita_74181() {
         int sscanf_result_S3 = sscanf(line, "%*[^<]<%d>", &S3);
         if (sscanf_result_S3 == 1) {} else { printf("ERRORE: Valore non valido in S3\n"); fclose(file); return; }
         if (S3 == 0) {} else if (S3 == 1) {} else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      S3 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
-
         fclose(file);
     }
-
     int A[4] = {A0, A1, A2, A3};
     int B[4] = {B0, B1, B2, B3};
     int S[4] = {S0, S1, S2, S3};
     int F[4];
     int A_uguale_B, P, Cn_piu_4, G;
-
     n_ALU74181(Cn, M, A, B, S, F, &A_uguale_B, &P, &Cn_piu_4, &G);
-
-    // Output dei risultati
     printf("\n");
-    printf("╔═════════════════════════════════════════════╗\n");
-    printf("║           RISULTATI ALU 74181               ║\n");
-    printf("╠═════════════════════════════════════════════╣\n");
-    printf("║                                             ║\n");
-    printf("║  - F0      = %-3d                            ║\n", F[0]);
-    printf("║  - F1      = %-3d                            ║\n", F[1]);
-    printf("║  - A = B   = %-3d                            ║\n", A_uguale_B);
-    printf("║  - F2      = %-3d                            ║\n", F[2]);
-    printf("║  - F3      = %-3d                            ║\n", F[3]);
-    printf("║  - P       = %-3d                            ║\n", P);
-    printf("║  - Cn + 4  = %-3d                            ║\n", Cn_piu_4);
-    printf("║  - G       = %-3d                            ║\n", G);
-    printf("║                                             ║\n");
-    printf("╚═════════════════════════════════════════════╝\n");
-
-    // Salvataggio in memoria
+    printf("╔═════════════════════════════════════════════╗\n║           RISULTATI ALU 74181               ║\n╠═════════════════════════════════════════════╣\n║                                             ║\n║  - F0      = %-3d                            ║\n║  - F1      = %-3d                            ║\n║  - A = B   = %-3d                            ║\n║  - F2      = %-3d                            ║\n║  - F3      = %-3d                            ║\n║  - P       = %-3d                            ║\n║  - Cn + 4  = %-3d                            ║\n║  - G       = %-3d                            ║\n║                                             ║\n╚═════════════════════════════════════════════╝\n",F[0],F[1],A_uguale_B,F[2],F[3],P,Cn_piu_4,G);
     salva_in_memoria(Cn_piu_4);
-
-    // Salvataggio su file
     FILE *file_out = fopen("risultati_alu_74181.txt", "w");
     if (file_out == NULL) { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║    Impossibile aprire file     ║\n║         di scrittura           ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
 
@@ -574,30 +495,21 @@ void operazioni_algebriche() {
                 if (strcmp(operazione, "somma") != 0) break; // solo per sicurezza
                 {
                     int res = somma(a, b);
-                    printf("╔════════════════════════════════╗\n"
-                           "║         SOMMA ALGEBRICA        ║\n"
-                           "╚════════════════════════════════╝\n"
-                           "Risultato: %d\n", res);
+                    printf("╔════════════════════════════════╗\n║         SOMMA ALGEBRICA        ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
                     salva_in_memoria(res);
                 }
                 break;
             case 2:
                 {
                     int res = sottrazione(a, b);
-                    printf("╔════════════════════════════════╗\n"
-                           "║      SOTTRAZIONE ALGEBRICA     ║\n"
-                           "╚════════════════════════════════╝\n"
-                           "Risultato: %d\n", res);
+                    printf("╔════════════════════════════════╗\n║      SOTTRAZIONE ALGEBRICA     ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
                     salva_in_memoria(res);
                 }
                 break;
             case 3:
                 {
                     int res = moltiplicazione(a, b);
-                    printf("╔════════════════════════════════╗\n"
-                           "║    MOLTIPLICAZIONE ALGEBRICA   ║\n"
-                           "╚════════════════════════════════╝\n"
-                           "Risultato: %d\n", res);
+                    printf("╔════════════════════════════════╗\n║    MOLTIPLICAZIONE ALGEBRICA   ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
                     salva_in_memoria(res);
                 }
                 break;
@@ -607,22 +519,13 @@ void operazioni_algebriche() {
                         printf("Errore: divisione per zero.\n");
                     } else {
                         int res = divisione(a, b);
-                        printf("╔════════════════════════════════╗\n"
-                               "║        DIVISIONE ALGEBRICA     ║\n"
-                               "╚════════════════════════════════╝\n"
-                               "Risultato: %d\n", res);
+                        printf("╔════════════════════════════════╗\n║        DIVISIONE ALGEBRICA     ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
                         salva_in_memoria(res);
                     }
                 }
                 break;
             default:
-                printf("╔════════════════════════════════╗\n"
-                       "║             ERRORE             ║\n"
-                       "╠════════════════════════════════╣\n"
-                       "║                                ║\n"
-                       "║   Operazione non riconosciuta  ║\n"
-                       "║                                ║\n"
-                       "╚════════════════════════════════╝\n");
+                printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Operazione non riconosciuta  ║\n║                                ║\n╚════════════════════════════════╝\n");
                 return;
         }
 
@@ -634,65 +537,40 @@ void operazioni_algebriche() {
         char operazione[20];
         printf(">> Scegli l'operazione (somma o moltiplicazione): ");
         scanf("%s", operazione);
-
         int scelta = 0;
-
-        // Verifica se è stato inserito un numero
         if (strlen(operazione) == 1 && isdigit(operazione[0])) {
             scelta = operazione[0] - '0';
         } else {
-            // Converte in minuscolo per confronto case-insensitive
             for (int i = 0; operazione[i]; i++) {
                 operazione[i] = tolower(operazione[i]);
             }
-
             if (strcmp(operazione, "somma") == 0)
                 scelta = 1;
             else if (strcmp(operazione, "moltiplicazione") == 0)
                 scelta = 3;
         }
-
         switch (scelta) {
             case 1:
                 {
                     int res = somma(somma(a, b), c);
-                    printf("╔════════════════════════════════╗\n"
-                           "║         SOMMA ALGEBRICA        ║\n"
-                           "╚════════════════════════════════╝\n"
-                           "Risultato: %d\n", res);
+                    printf("╔════════════════════════════════╗\n║         SOMMA ALGEBRICA        ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
                     salva_in_memoria(res);
                 }
                 break;
             case 3:
                 {
                     int res = moltiplicazione(moltiplicazione(a, b), c);
-                    printf("╔════════════════════════════════╗\n"
-                           "║    MOLTIPLICAZIONE ALGEBRICA   ║\n"
-                           "╚════════════════════════════════╝\n"
-                           "Risultato: %d\n", res);
+                    printf("╔════════════════════════════════╗\n║    MOLTIPLICAZIONE ALGEBRICA   ║\n╚════════════════════════════════╝\nRisultato: %d\n", res);
                     salva_in_memoria(res);
                 }
                 break;
             default:
-                printf("╔════════════════════════════════╗\n"
-                       "║             ERRORE             ║\n"
-                       "╠════════════════════════════════╣\n"
-                       "║                                ║\n"
-                       "║   Operazione non riconosciuta  ║\n"
-                       "║                                ║\n"
-                       "╚════════════════════════════════╝\n");
+                printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Operazione non riconosciuta  ║\n║                                ║\n╚════════════════════════════════╝\n");
                 return;
         }
 
     } else {
-        printf("╔════════════════════════════════╗\n"
-               "║             ERRORE             ║\n"
-               "╠════════════════════════════════╣\n"
-               "║                                ║\n"
-               "║ Numero di elementi non valido. ║\n"
-               "║      Scegli tra 2 oppure 3     ║\n"
-               "║                                ║\n"
-               "╚════════════════════════════════╝\n");
+        printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║ Numero di elementi non valido. ║\n║      Scegli tra 2 oppure 3     ║\n║                                ║\n╚════════════════════════════════╝\n");
     }
 }
 void misura_ciclo_clock() {
@@ -754,33 +632,15 @@ void misura_ciclo_clock() {
     printf("\nMisurando la durata di un ciclo di clock (simulato)...\n");
     int i;
     for (i = 0; i < 1000; i++) {
-        attendi_un_ciclo_clock(); // Richiama la funzione definita sopra
+        attendi_un_ciclo_clock();
     }
-    printf("\nSimulazione completata.\n");
-    printf("Un ciclo di clock richiede circa 1 millisecondo in questa simulazione.\n");
-    printf("Questo è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
+    printf("\nSimulazione completata.\nUn ciclo di clock richiede circa 1 millisecondo in questa simulazione.\nQuesto è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
     return;
 }
-
 int main() {
     int scelta;
-
     while (1) {
-        printf("\n╔════════════════════════════════════════════════════════╗");
-        printf("\n║                    MENU PRINCIPALE                     ║");
-        printf("\n╠════════════════════════════════════════════════════════╣");
-        printf("\n║  1. Operazioni Logiche (ALU 74181 - Singolo)           ║");
-        printf("\n║  2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║");
-        printf("\n║  3. Operazioni Algebriche                              ║");
-        printf("\n║  4. Convertitore Binario → Decimale                    ║");
-        printf("\n║  5. Convertitore Decimale → Binario                    ║");
-        printf("\n║  6. ALU in Modalità PIPO (32 bit - 8x74181)            ║");
-        printf("\n║  7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║");
-        printf("\n║  8. Visualizza Memoria                                 ║");
-        printf("\n║  9. Calcolo del Clock                                  ║");
-        printf("\n║  0. Esci                                               ║");
-        printf("\n╚════════════════════════════════════════════════════════╝");
-        printf("\n>> Inserisci la tua scelta: ");
+        printf("\n╔════════════════════════════════════════════════════════╗\n║                    MENU PRINCIPALE                     ║\n╠════════════════════════════════════════════════════════╣\n║  1. Operazioni Logiche (ALU 74181 - Singolo)           ║\n║  2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║\n║  3. Operazioni Algebriche                              ║\n║  4. Convertitore Binario → Decimale                    ║\n║  5. Convertitore Decimale → Binario                    ║\n║  6. ALU in Modalità PIPO (32 bit - 8x74181)            ║\n║  7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║\n║  8. Visualizza Memoria                                 ║\n║  9. Calcolo del Clock                                  ║\n║  0. Esci                                               ║\n╚════════════════════════════════════════════════════════╝\n>> Inserisci la tua scelta: ");
         scanf("%d", &scelta);
 
         if (scelta == 0) {
