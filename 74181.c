@@ -387,16 +387,7 @@ void stampa_tabella_verita_74181() {
     fprintf(file_out, "║           RISULTATI ALU 74181               ║\n");
     fprintf(file_out, "╠═════════════════════════════════════════════╣\n");
     fprintf(file_out, "║                                             ║\n");
-    fprintf(file_out, "║  - F0      = %-3d                            ║\n", F[0]);
-    fprintf(file_out, "║  - F1      = %-3d                            ║\n", F[1]);
-    fprintf(file_out, "║  - A = B   = %-3d                            ║\n", A_uguale_B);
-    fprintf(file_out, "║  - F2      = %-3d                            ║\n", F[2]);
-    fprintf(file_out, "║  - F3      = %-3d                            ║\n", F[3]);
-    fprintf(file_out, "║  - P       = %-3d                            ║\n", P);
-    fprintf(file_out, "║  - Cn + 4  = %-3d                            ║\n", Cn_piu_4);
-    fprintf(file_out, "║  - G       = %-3d                            ║\n", G);
-    fprintf(file_out, "║                                             ║\n");
-    fprintf(file_out, "╚═════════════════════════════════════════════╝\n");
+    fprintf(file_out, "║  - F0      = %-3d                            ║\n║  - F1      = %-3d                            ║\n║  - A = B   = %-3d                            ║\n║  - F2      = %-3d                            ║\n║  - F3      = %-3d                            ║\n║  - P       = %-3d                            ║\n║  - Cn + 4  = %-3d                            ║\n║  - G       = %-3d                            ║\n║                                             ║\n╚═════════════════════════════════════════════╝\n", F[0],F[1],A_uguale_B,F[2],F[3],P,Cn_piu_4,G);
     
 
     fclose(file_out);
