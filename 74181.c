@@ -362,14 +362,7 @@ void stampa_tabella_verita_74181() {
     salva_in_memoria(Cn_piu_4);
     FILE *file_out = fopen("risultati_alu_74181.txt", "w");
     if (file_out == NULL) { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║    Impossibile aprire file     ║\n║         di scrittura           ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
-
-    fprintf(file_out, "╔═════════════════════════════════════════════╗\n");
-    fprintf(file_out, "║           RISULTATI ALU 74181               ║\n");
-    fprintf(file_out, "╠═════════════════════════════════════════════╣\n");
-    fprintf(file_out, "║                                             ║\n");
-    fprintf(file_out, "║  - F0      = %-3d                            ║\n║  - F1      = %-3d                            ║\n║  - A = B   = %-3d                            ║\n║  - F2      = %-3d                            ║\n║  - F3      = %-3d                            ║\n║  - P       = %-3d                            ║\n║  - Cn + 4  = %-3d                            ║\n║  - G       = %-3d                            ║\n║                                             ║\n╚═════════════════════════════════════════════╝\n", F[0],F[1],A_uguale_B,F[2],F[3],P,Cn_piu_4,G);
-    
-
+    fprintf(file_out, "╔═════════════════════════════════════════════╗\n║           RISULTATI ALU 74181               ║\n╠═════════════════════════════════════════════╣\n║                                             ║\n║  - F0      = %-3d                            ║\n║  - F1      = %-3d                            ║\n║  - A = B   = %-3d                            ║\n║  - F2      = %-3d                            ║\n║  - F3      = %-3d                            ║\n║  - P       = %-3d                            ║\n║  - Cn + 4  = %-3d                            ║\n║  - G       = %-3d                            ║\n║                                             ║\n╚═════════════════════════════════════════════╝\n", F[0],F[1],A_uguale_B,F[2],F[3],P,Cn_piu_4,G);
     fclose(file_out);
     sleep(2);
     stampa_tabella_verita_74181();
@@ -429,27 +422,20 @@ void operazioni_algebriche() {
     int num_elementi;
     printf(">> Quanti elementi vuoi utilizzare (2 o 3)? ");
     scanf("%d", &num_elementi);
-
     if (num_elementi == 2) {
         int a, b;
         printf(">> Inserisci i due numeri: ");
         scanf("%d %d", &a, &b);
-
         char operazione[20];
         printf(">> Scegli l'operazione (1 - Somma, 2 - Sottrazione, 3 - Moltiplicazione, 4 - Divisione): ");
         scanf("%s", operazione);
-
         int scelta = 0;
-
-        // Verifica se è stato inserito un numero
         if (strlen(operazione) == 1 && isdigit(operazione[0])) {
             scelta = operazione[0] - '0';
         } else {
-            // Converte in minuscolo per confronto case-insensitive
             for (int i = 0; operazione[i]; i++) {
                 operazione[i] = tolower(operazione[i]);
             }
-
             if (strcmp(operazione, "somma") == 0)
                 scelta = 1;
             else if (strcmp(operazione, "sottrazione") == 0)
@@ -459,7 +445,6 @@ void operazioni_algebriche() {
             else if (strcmp(operazione, "divisione") == 0)
                 scelta = 4;
         }
-
         switch (scelta) {
             case 1:
                 if (strcmp(operazione, "somma") != 0) break; // solo per sicurezza
@@ -498,12 +483,10 @@ void operazioni_algebriche() {
                 printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Operazione non riconosciuta  ║\n║                                ║\n╚════════════════════════════════╝\n");
                 return;
         }
-
     } else if (num_elementi == 3) {
         int a, b, c;
         printf(">> Inserisci i tre numeri: ");
         scanf("%d %d %d", &a, &b, &c);
-
         char operazione[20];
         printf(">> Scegli l'operazione (somma o moltiplicazione): ");
         scanf("%s", operazione);
@@ -538,7 +521,6 @@ void operazioni_algebriche() {
                 printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Operazione non riconosciuta  ║\n║                                ║\n╚════════════════════════════════╝\n");
                 return;
         }
-
     } else {
         printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║ Numero di elementi non valido. ║\n║      Scegli tra 2 oppure 3     ║\n║                                ║\n╚════════════════════════════════╝\n");
     }
@@ -568,7 +550,6 @@ void misura_ciclo_clock() {
         }
         fclose(fp);
     }
-
     if (su_linux == 1) {
         sistema = "Linux";
         printf("OS: %s\n", sistema);
@@ -612,7 +593,6 @@ int main() {
     while (1) {
         printf("\n╔════════════════════════════════════════════════════════╗\n║                    MENU PRINCIPALE                     ║\n╠════════════════════════════════════════════════════════╣\n║  1. Operazioni Logiche (ALU 74181 - Singolo)           ║\n║  2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║\n║  3. Operazioni Algebriche                              ║\n║  4. Convertitore Binario → Decimale                    ║\n║  5. Convertitore Decimale → Binario                    ║\n║  6. ALU in Modalità PIPO (32 bit - 8x74181)            ║\n║  7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║\n║  8. Visualizza Memoria                                 ║\n║  9. Calcolo del Clock                                  ║\n║  0. Esci                                               ║\n╚════════════════════════════════════════════════════════╝\n>> Inserisci la tua scelta: ");
         scanf("%d", &scelta);
-
         if (scelta == 0) {
             printf("Uscita dal programma...\n");
             break;
