@@ -1,8 +1,0 @@
----- STATISTICHE ----
-Timestamp		CPU (s)	Memoria (KB)	Core CPU	Exe Size (KB)
----------------------
-
----- STATISTICHE ----
-Timestamp		CPU (s)	Memoria (KB)	Core CPU	Exe Size (KB)
----------------------
-
