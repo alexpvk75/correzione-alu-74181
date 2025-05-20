@@ -75,7 +75,6 @@ int porta_or(int a, int b) {
 int porta_exor(int a, int b) { 
     return (a + b) - 2 * (a * b); 
 }
-
 int porta_or_3(int a, int b, int c) { 
     int tmp = porta_or(a, b); 
     return porta_or(tmp, c); 
@@ -116,7 +115,6 @@ int porta_exor_5(int a, int b, int c, int d, int e) {
     int tmp = porta_exor_4(a, b, c, d);
     return porta_exor(tmp, e);
 }
-
 void n_ALU74181(int Cn, int M, int A[4], int B[4], int S[4],
     int F[4], int *A_uguale_B, int *P, int *Cn_piu_4, int *G) {
 int neg1 = porta_not(M);
@@ -367,7 +365,6 @@ void stampa_tabella_verita_74181() {
     sleep(2);
     stampa_tabella_verita_74181();
 }
-
  void ALU32() {
     unsigned int operandoA, operandoB;
     int Cn, M;
