@@ -4,14 +4,13 @@
 #include <time.h>
 #include <ctype.h>
 #include <unistd.h>
-
 int BIN_DEC_DECODER(const char *binario) {
     int decimale = 0;
     int lunghezza = strlen(binario);
-    for ( int i = 0; i < lunghezza; i++) {
+    for (int i = 0; i < lunghezza; i++) {
         if (binario[i] == '1') {
             decimale = decimale * 2 + 1;
-        } else if ( binario[i] == '0') {
+        } else if (binario[i] == '0') {
             decimale = decimale * 2;
         } else {
             printf("Input non valido. Solo 0 e 1 sono accettati.\n");
@@ -20,21 +19,23 @@ int BIN_DEC_DECODER(const char *binario) {
     }
     return decimale;
 }
+
 int DEC_BIN_CODER(int numero) {
     int binario[33];
     int i = 0;
     if (numero == 0) {
         printf("0");
-        return;
+        return 0;
     }
     while (numero > 0) {
-        binario[i] = numero % 2;
+        binario[i++] = numero % 2;
         numero = numero / 2;
-        i++;
     }
     for (int j = i - 1; j >= 0; j--) {
         printf("%d", binario[j]);
     }
+    printf("\n");
+    return 0;
 }
 int memoria[10];
 int indice_memoria = 0;
@@ -204,46 +205,25 @@ void stampa_tabella_verita_74181() {
         printf(">> Inserisci i valori degli input (0 o 1):\n");
         printf(">> Cn: ");
         scanf("%d", &Cn);
-        if (Cn == 0){}else if(Cn == 1){}else {
-            printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      Cn deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");
-            return;
-        }
+        if (Cn == 0){}else if(Cn == 1){}else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      Cn deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
         printf(">> M:  ");
         scanf("%d", &M);
-        if (M == 0){}else if(M == 1){}else {
-            printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║       M deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");
-            return;
-        }
+        if (M == 0){}else if(M == 1){}else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║       M deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
         printf(">> A0: ");
         scanf("%d", &A0);
-        if (A0 == 0){}else if(A0 == 1){}else {
-            printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      A0 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");
-            return;
-        }
+        if (A0 == 0){}else if(A0 == 1){}else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      A0 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
         printf(">> B0: ");
         scanf("%d", &B0);
-        if (B0 == 0){}else if(B0 == 1){}else {
-            printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      B0 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");
-            return;
-        }
+        if (B0 == 0){}else if(B0 == 1){}else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      B0 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
         printf(">> A1: ");
         scanf("%d", &A1);
-        if (A1 == 0){}else if(A1 == 1){}else {
-            printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      A1 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");
-            return;
-        }
+        if (A1 == 0){}else if(A1 == 1){}else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      A1 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
         printf(">> B1: ");
         scanf("%d", &B1);
-        if (B1 == 0){}else if(B1 == 1){}else {
-            printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      B1 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");
-            return;
-        }
+        if (B1 == 0){}else if(B1 == 1){}else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      B1 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
         printf(">> A2: ");
         scanf("%d", &A2);
-        if (A2 == 0){}else if(A2 == 1){}else {
-            printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      A2 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");
-            return;
-        }
+        if (A2 == 0){}else if(A2 == 1){}else { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      A2 deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n"); return; }
         printf(">> B2: ");
         scanf("%d", &B2);
         if (B2 == 0){}else if(B2 == 1){}else {
@@ -414,7 +394,7 @@ void stampa_tabella_verita_74181() {
     for (int i = 0; i < 4; i++) {
         if (S[i] == 0){}else if(S[i] == 1){}else{printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      S%d deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n", i);return;}
     }
-    unsigned int result = 0;
+    int result = 0;
     int currentCn = Cn;
     int F[4];        
     int A_uguale_B, P, Cn_piu_4, G; 
@@ -429,10 +409,9 @@ void stampa_tabella_verita_74181() {
         result |= (nibbleResult << (nibble * 4));
         currentCn = Cn_piu_4;
     }
-    printf("Risultato ALU PIPO a 32 bit (decimale): %u\n", result);
+    printf("Risultato ALU PIPO a 32 bit (decimale): %i\n", result);
     salva_in_memoria(result);
 }
-
  int somma(int a, int b) {
     return a + b;
 }
@@ -648,12 +627,14 @@ int main() {
             char bin[33];
             printf(">> Inserisci un numero binario: ");
             scanf("%32s", bin);
-            printf("Risultato (decimale): %d\n", BIN_DEC_DECODER(bin));
+            printf("Risultato (decimale): ");
+            printf(BIN_DEC_DECODER(bin));
         } else if (scelta == 5) {
             int dec;
             printf(">> Inserisci un numero decimale: ");
             scanf("%d", &dec);
-            printf("Risultato (binario): %d\n", DEC_BIN_CODER(dec));
+            printf("Risultato (binario): ");
+            printf(DEC_BIN_CODER(dec));
         } else if (scelta == 6) {
             ALU32();
         } else if (scelta == 7) {
@@ -668,6 +649,5 @@ int main() {
         }
         sleep(6);
     }
-
     return 0;
 }
