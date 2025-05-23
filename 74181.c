@@ -5,6 +5,12 @@
 #include <ctype.h>
 #include <unistd.h>
 
+void delay(int milliseconds) { clock_t start_time = clock(); clock_t end_time = milliseconds * CLOCKS_PER_SEC / 1000 + start_time; while (clock() < end_time); }
+void clock_step(int *CLK, int *prev_CLK, int milliseconds) { delay(milliseconds); *prev_CLK = *CLK; *CLK = 1 - *CLK; }
+int NAND3(int A, int B, int C) { return 1 - (A * B * C); }
+void n_SR_FLIP_FLOP(int D, int S_reg, int R_reg, int CLK, int *prev_CLK, int *Q, int *Q_bar) { if ((CLK * (1 - *prev_CLK)) == 1) { int J = D; int K = 1 - D; *Q     = NAND3(S_reg, *Q_bar, NAND3(J, CLK, *Q_bar)); *Q_bar = NAND3(R_reg, *Q,     NAND3(K, CLK, *Q)); } *prev_CLK = CLK; }
+void n_PIPO74198(int D[8], int S_reg[8], int R_reg[8], int CLK, int prev_CLK[8], int Q[8], int Q_bar[8]) { for (int i = 0; i < 8; i++) { n_SR_FLIP_FLOP(D[i], S_reg[i], R_reg[i], CLK, &prev_CLK[i], &Q[i], &Q_bar[i]); } }
+void reg_PIPO32(int D[32], int S_reg[32], int R_reg[32], int CLK, int prev_CLK[32], int Q[32], int Q_bar[32]) { for (int i = 0; i < 4; i++) { n_PIPO74198(&D[i * 8], &S_reg[i * 8], &R_reg[i * 8], CLK, &prev_CLK[i * 8], &Q[i * 8], &Q_bar[i * 8]); } }
 int BIN_DEC_DECODER(const char *binario) { int decimale = 0; int lunghezza = strlen(binario); for (int i = 0; i < lunghezza; i++) { if (binario[i] == '1') { decimale = decimale * 2 + 1; } else if (binario[i] == '0') { decimale = decimale * 2; } else { printf("Input non valido. Solo 0 e 1 sono accettati.\n"); return -1; } } return decimale; }
 int DEC_BIN_CODER(int numero) { int binario[33]; int i = 0; if (numero == 0) { printf("0"); return 0; } while (numero > 0) { binario[i++] = numero % 2; numero = numero / 2; } for (int j = i - 1; j >= 0; j--) { printf("%d", binario[j]); } printf("\n"); return 0; }
 int memoria[10]; int indice_memoria = 0; void salva_in_memoria(int valore) { if (indice_memoria < 10) { memoria[indice_memoria++] = valore; } else { printf("[!] Memoria piena!\n"); } }
@@ -90,15 +96,51 @@ void stampa_tabella_verita_74181() { printf("\n"); printf("╔════╦═
     printf(">> Inserisci il segnale di Carry In: "); scanf("%d", &Cn); if (Cn == 0){}else if(Cn == 1){}else{printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      Cn deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");return;}
     printf(">> Inserisci il segnale M: "); scanf("%d", &M); if (M == 0){}else if(M == 1){}else{printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║       M deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n");return;}
     printf(">> Inserisci il segnale di selezione S0: "); scanf("%d", &S[0]); printf(">> Inserisci il segnale di selezione S1: "); scanf("%d", &S[1]); printf(">> Inserisci il segnale di selezione S2: "); scanf("%d", &S[2]); printf(">> Inserisci il segnale di selezione S3: "); scanf("%d", &S[3]); for (int i = 0; i < 4; i++) { if (S[i] == 0){}else if(S[i] == 1){}else{printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║      S%d deve essere 0 o 1      ║\n║                                ║\n╚════════════════════════════════╝\n", i);return;} }
-    int result = 0;
-    int currentCn = Cn;
-    int F[4], A_uguale_B, P, Cn_piu_4, G; 
-    for (int nibble = 0; nibble < 8; nibble++) {
-        int Abits[4], Bbits[4];
-        for (int bit = 0; bit < 4; bit++) { Abits[bit] = (operandoA >> (nibble * 4 + bit)) & 1; Bbits[bit] = (operandoB >> (nibble * 4 + bit)) & 1; }
-        n_ALU74181(currentCn, M, Abits, Bbits, S, F, &A_uguale_B, &P, &Cn_piu_4, &G);
-        unsigned int nibbleResult = (F[0] << 0) | (F[1] << 1) | (F[2] << 2) | (F[3] << 3); result |= (nibbleResult << (nibble * 4)); currentCn = Cn_piu_4;
+    int D_A[32], D_B[32], D_F[32];
+    for (int i = 0; i < 32; i++) {
+        unsigned int tempA = operandoA;
+        for (int i = 0; i < 32; i++) {
+            D_A[i] = tempA % 2;
+            tempA /= 2;
+        }
+        unsigned int tempB = operandoB;
+        for (int i = 0; i < 32; i++) {
+            D_B[i] = tempB % 2;
+            tempB /= 2;
+        }
     }
+    int Q_A[32] = {0}, Q_bar_A[32] = {0}, prev_CLK_A[32] = {0};
+    int Q_B[32] = {0}, Q_bar_B[32] = {0}, prev_CLK_B[32] = {0};
+    int Q_F[32] = {0}, Q_bar_F[32] = {0}, prev_CLK_F[32] = {0};
+    int S_reg[32], R_reg[32];
+    for (int i = 0; i < 32; i++) { S_reg[i] = 1; R_reg[i] = 1; }
+    int CLK = 0, prev_CLK = 0;
+    for (int i = 0; i < 4; i++) {
+        clock_step(&CLK, &prev_CLK, 100);
+        reg_PIPO32(D_A, S_reg, R_reg, CLK, prev_CLK_A, Q_A, Q_bar_A);
+        reg_PIPO32(D_B, S_reg, R_reg, CLK, prev_CLK_B, Q_B, Q_bar_B);
+    }
+    int result = 0; int currentCn = Cn; int F[4], A_uguale_B, P, Cn_piu_4, G; 
+    for (int nibble = 0; nibble < 8; nibble++) { int Abits[4], Bbits[4];
+        for (int bit = 0; bit < 4; bit++) { Abits[bit] = Q_A[nibble * 4 + bit]; Bbits[bit] = Q_B[nibble * 4 + bit]; }
+        n_ALU74181(currentCn, M, Abits, Bbits, S, F, &A_uguale_B, &P, &Cn_piu_4, &G);
+        unsigned int nibbleResult = F[0] + F[1]*2 + F[2]*4 + F[3]*8;
+        int power = 1;
+        for (int i = 0; i < nibble; i++) {
+            power *= 16;
+        }
+        result += nibbleResult * power;
+        currentCn = Cn_piu_4;
+    }
+    
+    for (int i = 0; i < 32; i++) {
+        int temp = result;
+        for (int j = 0; j < i; j++) {
+            temp = temp / 2;  
+        }
+        D_F[i] = temp % 2;
+    }
+    for (int i = 0; i < 4; i++) { clock_step(&CLK, &prev_CLK, 100); reg_PIPO32(D_F, S_reg, R_reg, CLK, prev_CLK_F, Q_F, Q_bar_F); }
     printf("Risultato ALU PIPO a 32 bit (decimale): %i\n", result); salva_in_memoria(result);
 }
 int somma(int a, int b) { return a + b; }
@@ -118,8 +160,7 @@ void misura_ciclo_clock() {
 int main() {
     int scelta;
     while (1) {
-        printf("\n╔════════════════════════════════════════════════════════╗\n║                    MENU PRINCIPALE                     ║\n╠════════════════════════════════════════════════════════╣\n║  1. Operazioni Logiche (ALU 74181 - Singolo)           ║\n║  2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║\n║  3. Operazioni Algebriche                              ║\n║  4. Convertitore Binario → Decimale                    ║\n║  5. Convertitore Decimale → Binario                    ║\n║  6. ALU in Modalità PIPO (32 bit - 8x74181)            ║\n║  7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║\n║  8. Visualizza Memoria                                 ║\n║  9. Calcolo del Clock                                  ║\n║  0. Esci                                               ║\n╚════════════════════════════════════════════════════════╝\n>> Inserisci la tua scelta: ");
-        scanf("%d", &scelta);
+        printf("\n╔════════════════════════════════════════════════════════╗\n║                    MENU PRINCIPALE                     ║\n╠════════════════════════════════════════════════════════╣\n║  1. Operazioni Logiche (ALU 74181 - Singolo)           ║\n║  2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║\n║  3. Operazioni Algebriche                              ║\n║  4. Convertitore Binario → Decimale                    ║\n║  5. Convertitore Decimale → Binario                    ║\n║  6. ALU in Modalità PIPO (32 bit - 8x74181)            ║\n║  7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║\n║  8. Visualizza Memoria                                 ║\n║  9. Calcolo del Clock                                  ║\n║  0. Esci                                               ║\n╚════════════════════════════════════════════════════════╝\n>> Inserisci la tua scelta: "); scanf("%d", &scelta);
         if (scelta == 0) { printf("Uscita dal programma...\n"); break;
         } else if (scelta == 1) { simula_alu_74181(); 
         } else if (scelta == 2) { attendi_un_ciclo_clock(); simula_alu_74181();
