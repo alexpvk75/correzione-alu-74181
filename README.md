@@ -29,6 +29,3 @@
 </div>
 
 ---
-## 🤝 Contributori
-<div class="hover-grow" style="padding: 15px; border-radius: 8px; background: #34495e; color: white; border-left: 5px solid #e74c3c; transition: transform 0.3s ease-in-out; text-align: center; display: block; width: 80%; margin: auto;">
- <p>Grazie a:</p> <p> <a href="https://github.com/alexpvk75" style="color: #2980b9;">Oleksandr Pavlyk</a> | <a href="https://github.com/danilobrusa" style="color: #2980b9;">Danilo Ambrogio Brusa</a> | <a href="https://github.com/Leo-Galli" style="color: #2980b9;">Leonardo Galli</a> </p> </div>
