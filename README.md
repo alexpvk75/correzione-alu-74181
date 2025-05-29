@@ -1,7 +1,6 @@
 # Arithmetic Logic Unit 74181 Simulator
 
 > Simuliamo la leggendaria **74181 ALU** in linguaggio C.
-
 ---
 
 ## 🧠 Introduzione alla 74181 ALU

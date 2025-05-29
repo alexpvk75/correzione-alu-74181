@@ -1,6 +1,11 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "functional": "c"
+        "functional": "c",
+        "stdlib.h": "c",
+        "unistd.h": "c",
+        "time.h": "c",
+        "string.h": "c",
+        "ctype.h": "c"
     }
 }
