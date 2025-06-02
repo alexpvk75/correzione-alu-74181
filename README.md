@@ -93,3 +93,5 @@ Annessi a questa repository vi sono i seguenti allegati:
 - [Schema Logico](https://circuitverse.org/users/311719/projects/alu-74181-final)
 - [Lista dei bugs](https://github.com/Leo-Galli/74181/blob/main/bugs.txt)
 - Istruzioni per l'utilizzo e funzionalità
+---
+_Gli allegati sono disponibili sotto forma di link data la loro dimensione considerevole._
