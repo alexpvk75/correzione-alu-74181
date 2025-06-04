@@ -12,7 +12,7 @@ BUG RISOLTI - Simulatore ALU 74181
    - Descrizione: In alcune somme con numeri grandi, il simulatore non segnalava overflow.
    - Risoluzione: Aggiunta logica di rilevamento overflow tramite confronto dei bit di segno.
 
-4. [BUG #004] PIPO74198 non aggiornava correttamente l'uscita
+4. [BUG #004] I registri non aggiornavano correttamente l'uscita
    - Descrizione: I registri a scorrimento mantenevano valori errati tra due cicli consecutivi.
    - Risoluzione: Corretto il clock interno e l'aggiornamento dei registri.
 
