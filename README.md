@@ -33,8 +33,8 @@ L’applicazione è sviluppata in linguaggio C ed è stata progettata per essere
 
 ### 1. Clona il Repository
 ```bash
-git clone https://github.com/il-tuo-nome/il-nome-del-progetto.git 
-cd il-nome-del-progetto
+git clone https://github.com/Leo-Galli/74181.git 
+cd 74181
 ```
 ### 2. Compila il codice
 Usando GCC:
@@ -92,6 +92,7 @@ Annessi a questa repository vi sono i seguenti allegati:
 - [Report Tecnico](https://docs.google.com/document/d/1t80KM4RDQKBMuIQoPLAFnJRQeKX5ISx1Id5GahRIR-E/edit?usp=sharing)
 - [Schema Logico](https://circuitverse.org/users/311719/projects/alu-74181-final)
 - [Lista dei bugs](https://github.com/Leo-Galli/74181/blob/main/bugs.txt)
+- [Simulazione ALU](https://wokwi.com/projects/439836726113417217)
 - Istruzioni per l'utilizzo e funzionalità
 ---
 _Gli allegati sono disponibili sotto forma di link data la loro dimensione considerevole._
