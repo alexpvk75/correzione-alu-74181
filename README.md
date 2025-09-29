@@ -6,7 +6,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/Leo-Galli/74181?style=social)](https://github.com/Leo-Galli/74181/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/Leo-Galli/74181)](https://github.com/Leo-Galli/74181/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Leo-Galli/74181)](https://github.com/Leo-Galli/74181/commits/main)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-GPL_3.0-green.svg)](https://opensource.org/license/gpl-3-0)
 
 ---
 
