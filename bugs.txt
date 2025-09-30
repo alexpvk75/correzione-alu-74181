@@ -1,4 +1,5 @@
 BUG RISOLTI - Simulatore ALU 74181
+=================================
 
 1. [BUG #001] Errore nel riporto del valore di Cn
    - Descrizione: La funzione applicava la tabella di verità errata.
@@ -20,5 +21,21 @@ BUG RISOLTI - Simulatore ALU 74181
    - Descrizione: Inserendo un carattere alfanumerico dove era previsto un numero, il simulatore andava in loop.
    - Risoluzione: Implementata la validazione dell’input e gestione degli errori.
 
+------------------------------------------------
+
 NOTE FINALI:
-Tutti i bug noti sono stati risolti. Al momento non sono presenti malfunzionamenti critici rilevati nei test standard.
+Tutti i bug noti sono stati risolti. 
+Al momento non sono presenti malfunzionamenti critici rilevati nei test standard.
+
+------------------------------------------------
+
+COME CONTRIBUIRE:
+- È possibile segnalare nuovi bug aprendo una Issue su GitHub:
+  https://github.com/Leo-Galli/74181/issues
+
+- In alternativa, è possibile aggiungere direttamente il bug a questo file
+  seguendo il formato:
+
+  [BUG #XXX] Titolo bug
+   - Descrizione: ...
+   - Risoluzione: ...
