@@ -7,20 +7,129 @@
 
 /**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 
-void delay(int milliseconds) { clock_t start_time = clock(); clock_t end_time = milliseconds * CLOCKS_PER_SEC / 1000 + start_time; while (clock() < end_time); }
-void clock_step(int *CLK, int *prev_CLK, int milliseconds) { delay(milliseconds); *prev_CLK = *CLK; *CLK = 1 - *CLK; }
+void delay(int milliseconds) { 
+    clock_t start_time = clock(); 
+    clock_t end_time = milliseconds * CLOCKS_PER_SEC / 1000 + start_time; 
+    while (clock() < end_time); 
+}
+void clock_step(int *CLK, int *prev_CLK, int milliseconds) { 
+    delay(milliseconds); 
+    *prev_CLK = *CLK; 
+    *CLK = 1 - *CLK; 
+}
 int NAND3(int A, int B, int C) { return 1 - (A * B * C); } 
-void n_SR_FLIP_FLOP(int D, int S_reg, int R_reg, int CLK, int *prev_CLK, int *Q, int *Q_bar) { if ((CLK * (1 - *prev_CLK)) == 1) { int J = D; int K = 1 - D; *Q     = NAND3(S_reg, *Q_bar, NAND3(J, CLK, *Q_bar)); *Q_bar = NAND3(R_reg, *Q,     NAND3(K, CLK, *Q)); } *prev_CLK = CLK; }
-void n_PIPO74198(int D[8], int S_reg[8], int R_reg[8], int CLK, int prev_CLK[8], int Q[8], int Q_bar[8]) { for (int i = 0; i < 8; i++) { n_SR_FLIP_FLOP(D[i], S_reg[i], R_reg[i], CLK, &prev_CLK[i], &Q[i], &Q_bar[i]); } }
-void reg_PIPO32(int D[32], int S_reg[32], int R_reg[32], int CLK, int prev_CLK[32], int Q[32], int Q_bar[32]) { for (int i = 0; i < 4; i++) { n_PIPO74198(&D[i * 8], &S_reg[i * 8], &R_reg[i * 8], CLK, &prev_CLK[i * 8], &Q[i * 8], &Q_bar[i * 8]); } }
-int BIN_DEC_DECODER(const char *binario) { if (binario == NULL) { printf("ERRORE: input NULL non valido.\n"); return -1; } int decimale = 0; int lunghezza = strlen(binario); for (int i = 0; i < lunghezza; i++) { if (binario[i] == '1') { decimale = decimale * 2 + 1; } else if (binario[i] == '0') { decimale = decimale * 2; } else { printf("Input non valido. Solo 0 e 1 sono accettati.\n"); return -1; } } return decimale; }
-char* DEC_BIN_CODER(int numero) { static char binario[33]; int i = 0; if (numero == 0) { strcpy(binario, "0"); return binario; } while (numero > 0) { binario[i++] = '0' + (numero % 2); numero /= 2; } binario[i] = '\0'; for (int j = 0; j < i / 2; j++) { char temp = binario[j]; binario[j] = binario[i - 1 - j]; binario[i - 1 - j] = temp; } return binario; }
+void n_SR_FLIP_FLOP(int D, int S_reg, int R_reg, int CLK, int *prev_CLK, int *Q, int *Q_bar) { 
+    if ((CLK * (1 - *prev_CLK)) == 1) { 
+        int J = D; int K = 1 - D; 
+        *Q     = NAND3(S_reg, *Q_bar, NAND3(J, CLK, *Q_bar)); 
+        *Q_bar = NAND3(R_reg, *Q,     NAND3(K, CLK, *Q)); 
+    } 
+    *prev_CLK = CLK; 
+}
+void n_PIPO74198(int D[8], int S_reg[8], int R_reg[8], int CLK, int prev_CLK[8], int Q[8], int Q_bar[8]) { 
+    for (int i = 0; i < 8; i++) { 
+        n_SR_FLIP_FLOP(D[i], S_reg[i], R_reg[i], CLK, &prev_CLK[i], &Q[i], &Q_bar[i]); 
+    } 
+}
+void reg_PIPO32(int D[32], int S_reg[32], int R_reg[32], int CLK, int prev_CLK[32], int Q[32], int Q_bar[32]) { 
+    for (int i = 0; i < 4; i++) { 
+        n_PIPO74198(&D[i * 8], &S_reg[i * 8], &R_reg[i * 8], CLK, &prev_CLK[i * 8], &Q[i * 8], &Q_bar[i * 8]); 
+    } 
+}
+int BIN_DEC_DECODER(const char *binario) { 
+    if (binario == NULL) { 
+        printf("ERRORE: input NULL non valido.\n"); return -1; 
+    } 
+    int decimale = 0; 
+    int lunghezza = strlen(binario); 
+    for (int i = 0; i < lunghezza; i++) { 
+        if (binario[i] == '1') { 
+            decimale = decimale * 2 + 1; 
+        } else if (binario[i] == '0') { 
+            decimale = decimale * 2; 
+        } else { 
+            printf("Input non valido. Solo 0 e 1 sono accettati.\n"); 
+            return -1; 
+        } 
+    } return decimale; 
+}
+char* DEC_BIN_CODER(int numero) { 
+    static char binario[33]; 
+    int i = 0; 
+    if (numero == 0) { 
+        strcpy(binario, "0"); 
+        return binario; 
+    } while (numero > 0) { 
+        binario[i++] = '0' + (numero % 2); 
+        numero /= 2; 
+    } 
+    binario[i] = '\0'; 
+    for (int j = 0; j < i / 2; j++) { 
+        char temp = binario[j]; 
+        binario[j] = binario[i - 1 - j]; 
+        binario[i - 1 - j] = temp; 
+    } return binario; 
+}
 int *memoria = NULL; int capacita_memoria = 10; int indice_memoria = 0;
-void salva_in_memoria(int valore) { if (memoria == NULL) { memoria = malloc(capacita_memoria * sizeof(int)); if (!memoria) { printf("ERRORE: impossibile allocare la memoria.\n"); exit(EXIT_FAILURE); } } if (indice_memoria >= capacita_memoria) { capacita_memoria *= 2; int *temp = realloc(memoria, capacita_memoria * sizeof(int)); if (!temp) { printf("ERRORE: impossibile espandere la memoria.\n"); free(memoria); memoria = NULL; exit(EXIT_FAILURE); } memoria = temp; printf("[INFO] Memoria espansa a %d celle.\n", capacita_memoria); } memoria[indice_memoria++] = valore; }
-void attendi_un_ciclo_clock() { clock_t start_time = clock(); clock_t current_time; do { current_time = clock(); } while ((current_time - start_time) < CLOCKS_PER_SEC / 1000); }
-void stampa_memoria() { printf("Contenuto della memoria:\n"); for (int i = 0; i < indice_memoria; i++) { printf("Memoria[%d] = %-3d\n", i, memoria[i]); } }
-void stato_memoria() { printf("Stato memoria:\n"); printf("- Totale allocato: %d celle\n", capacita_memoria); printf("- Occupato: %d celle\n", indice_memoria); } int porta_not(int a) { return 1 - a; } int porta_and(int a, int b) { return a * b; } int porta_or(int a, int b) { return (a + b) - (a * b); } int porta_exor(int a, int b) { return (a + b) - 2 * (a * b); } int porta_or_3(int a, int b, int c) { int tmp = porta_or(a, b); return porta_or(tmp, c); } int porta_or_4(int a, int b, int c, int d) { int tmp1 = porta_or(a, b); int tmp2 = porta_or(c, d); return porta_or(tmp1, tmp2); } int porta_or_5(int a, int b, int c, int d, int e) { int tmp = porta_or_4(a, b, c, d); return porta_or(tmp, e); } int porta_and_3(int a, int b, int c) { int tmp = porta_and(a, b); return porta_and(tmp, c); } int porta_and_4(int a, int b, int c, int d) { int tmp = porta_and(a, b); int tmp2 = porta_and(c, d); return porta_and(tmp, tmp2); } int porta_and_5(int a, int b, int c, int d, int e) { int tmp = porta_and_3(a, b, c); tmp = porta_and(tmp, d); return porta_and(tmp, e); } int porta_exor_3(int a, int b, int c) { int tmp = porta_exor(a, b); return porta_exor(tmp, c); } int porta_exor_4(int a, int b, int c, int d) { int tmp = porta_exor(a, b); int tmp2 = porta_exor(c, d); return porta_exor(tmp, tmp2); } int porta_exor_5(int a, int b, int c, int d, int e) { int tmp = porta_exor_4(a, b, c, d); return porta_exor(tmp, e); }
-void n_ALU74181(int Cn, int M, int A[4], int B[4], int S[4], int F[4], int *A_uguale_B, int *P, int *Cn_piu_4, int *G) { F[0] = porta_exor(porta_not(porta_and(Cn, porta_not(M))), porta_and(porta_not(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))))); F[1] = porta_exor(porta_not(porta_or(porta_and(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_and_3(porta_not(M), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), Cn))), porta_and(porta_not(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))))); F[2] = porta_exor(porta_not(porta_or_3(porta_and(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))), porta_and_4(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))))), porta_and(porta_not(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))))); F[3] = porta_exor(porta_not(porta_or_4(porta_and(porta_not(M), porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_4(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_5(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))))), porta_and(porta_not(porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3]))))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3]))))); *A_uguale_B = porta_and_4(porta_exor(porta_not(porta_and(Cn, porta_not(M))), porta_and(porta_not(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))))), porta_exor(porta_not(porta_or(porta_and(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_and_3(porta_not(M), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), Cn))), porta_and(porta_not(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))))), porta_exor(porta_not(porta_or_3(porta_and(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))), porta_and_4(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))))), porta_and(porta_not(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))))), porta_exor(porta_not(porta_or_4(porta_and(porta_not(M), porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_4(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_5(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))))), porta_and(porta_not(porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3]))))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))))); *P = porta_not(porta_and_4(porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3]))))); *Cn_piu_4 = porta_or(porta_not(porta_not(porta_and_5(Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))))), porta_not(porta_not(porta_or_4(porta_and_4(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and_3(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2])))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3])))))))); *G = porta_not(porta_or_4(porta_and_4(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and_3(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2])))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3])))))); }
+void salva_in_memoria(int valore) { 
+    if (memoria == NULL) { 
+        memoria = malloc(capacita_memoria * sizeof(int)); 
+        if (!memoria) { 
+            printf("ERRORE: impossibile allocare la memoria.\n"); exit(EXIT_FAILURE); } 
+        } 
+    if (indice_memoria >= capacita_memoria) { 
+        capacita_memoria *= 2; 
+        int *temp = realloc(memoria, capacita_memoria * sizeof(int)); 
+        if (!temp) {
+            printf("ERRORE: impossibile espandere la memoria.\n"); 
+            free(memoria); memoria = NULL; exit(EXIT_FAILURE); 
+        } 
+        memoria = temp; 
+        printf("[INFO] Memoria espansa a %d celle.\n", capacita_memoria); 
+    } 
+    memoria[indice_memoria++] = valore; 
+}
+void attendi_un_ciclo_clock() { 
+    clock_t start_time = clock(); 
+    clock_t current_time; do { 
+        current_time = clock(); 
+    } 
+    while ((current_time - start_time) < CLOCKS_PER_SEC / 1000); 
+}
+void stampa_memoria() { 
+    printf("Contenuto della memoria:\n"); 
+    for (int i = 0; i < indice_memoria; i++) { 
+        printf("Memoria[%d] = %-3d\n", i, memoria[i]); 
+    } 
+}
+void stato_memoria() { 
+    printf("Stato memoria:\n"); 
+    printf("- Totale allocato: %d celle\n", capacita_memoria); 
+    printf("- Occupato: %d celle\n", indice_memoria); 
+} 
+int porta_not(int a) { return 1 - a; } 
+int porta_and(int a, int b) { return a * b; } 
+int porta_or(int a, int b) { return (a + b) - (a * b); } 
+int porta_exor(int a, int b) { return (a + b) - 2 * (a * b); } 
+int porta_or_3(int a, int b, int c) { int tmp = porta_or(a, b); return porta_or(tmp, c); } 
+int porta_or_4(int a, int b, int c, int d) { int tmp1 = porta_or(a, b); int tmp2 = porta_or(c, d); return porta_or(tmp1, tmp2); } 
+int porta_or_5(int a, int b, int c, int d, int e) { int tmp = porta_or_4(a, b, c, d); return porta_or(tmp, e); } 
+int porta_and_3(int a, int b, int c) { int tmp = porta_and(a, b); return porta_and(tmp, c); } 
+int porta_and_4(int a, int b, int c, int d) { int tmp = porta_and(a, b); int tmp2 = porta_and(c, d); return porta_and(tmp, tmp2); } 
+int porta_and_5(int a, int b, int c, int d, int e) { int tmp = porta_and_3(a, b, c); tmp = porta_and(tmp, d); return porta_and(tmp, e); } 
+int porta_exor_3(int a, int b, int c) { int tmp = porta_exor(a, b); return porta_exor(tmp, c); } 
+int porta_exor_4(int a, int b, int c, int d) { int tmp = porta_exor(a, b); int tmp2 = porta_exor(c, d); return porta_exor(tmp, tmp2); } 
+int porta_exor_5(int a, int b, int c, int d, int e) { int tmp = porta_exor_4(a, b, c, d); return porta_exor(tmp, e); }
+void n_ALU74181(int Cn, int M, int A[4], int B[4], int S[4], int F[4], int *A_uguale_B, int *P, int *Cn_piu_4, int *G) { 
+    F[0] = porta_exor(porta_not(porta_and(Cn, porta_not(M))), porta_and(porta_not(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))))); 
+    F[1] = porta_exor(porta_not(porta_or(porta_and(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_and_3(porta_not(M), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), Cn))), porta_and(porta_not(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))))); 
+    F[2] = porta_exor(porta_not(porta_or_3(porta_and(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))), porta_and_4(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))))), porta_and(porta_not(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))))); 
+    F[3] = porta_exor(porta_not(porta_or_4(porta_and(porta_not(M), porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_4(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_5(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))))), porta_and(porta_not(porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3]))))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3]))))); 
+    *A_uguale_B = porta_and_4(porta_exor(porta_not(porta_and(Cn, porta_not(M))), porta_and(porta_not(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))))), porta_exor(porta_not(porta_or(porta_and(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0]))))), porta_and_3(porta_not(M), porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), Cn))), porta_and(porta_not(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))))), porta_exor(porta_not(porta_or_3(porta_and(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))), porta_and_4(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1])))))), porta_and(porta_not(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))))), porta_exor(porta_not(porta_or_4(porta_and(porta_not(M), porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2]))))), porta_and_3(porta_not(M), porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_4(porta_not(M), porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))), porta_and_5(porta_not(M), Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2])))))), porta_and(porta_not(porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3]))))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))))); 
+    *P = porta_not(porta_and_4(porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3]))))); 
+    *Cn_piu_4 = porta_or(porta_not(porta_not(porta_and_5(Cn, porta_not(porta_or(porta_and_3(porta_not(B[0]), S[2], A[0]), porta_and_3(A[0], B[0], S[3]))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))))), porta_not(porta_not(porta_or_4(porta_and_4(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and_3(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2])))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3])))))))); 
+    *G = porta_not(porta_or_4(porta_and_4(porta_not(porta_or_3(A[0], porta_and(B[0], S[0]), porta_and(S[1], porta_not(B[0])))), porta_not(porta_or(porta_and_3(porta_not(B[1]), S[2], A[1]), porta_and_3(A[1], S[3], B[1]))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and_3(porta_not(porta_or_3(A[1], porta_and(B[1], S[0]), porta_and(S[1], porta_not(B[1])))), porta_not(porta_or(porta_and_3(porta_not(B[2]), S[2], A[2]), porta_and_3(A[2], S[3], B[2]))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_and(porta_not(porta_or_3(A[2], porta_and(B[2], S[0]), porta_and(S[1], porta_not(B[2])))), porta_not(porta_or(porta_and_3(porta_not(B[3]), S[2], A[3]), porta_and_3(A[3], S[3], B[3])))), porta_not(porta_or_3(A[3], porta_and(B[3], S[0]), porta_and(S[1], porta_not(B[3])))))); 
+}
 void simula_alu_74181() {
     int Cn, M, A0, B0, A1, B1, A2, B2, A3, B3, S0, S1, S2, S3; char scelta[3];
     printf("Inserire dati manualmente? (S/N): "); scanf("%s", scelta); scelta[0] = toupper(scelta[0]);
@@ -102,4 +211,110 @@ void misura_ciclo_clock() {
     if (su_mac == 1) { sistema = "macOS"; printf("OS: %s\n", sistema); printf("CPU: Apple Silicon o x86 (detected)\n"); system("sysctl -n machdep.cpu.brand_string"); }
     printf("\nMisurando la durata di un ciclo di clock (simulato)...\n"); for (int i = 0; i < 1000; i++) { attendi_un_ciclo_clock(); } printf("\nSimulazione completata.\nUn ciclo di clock richiede circa 1 millisecondo in questa simulazione.\n"); printf("Questo è solo un valore stimato. La CPU reale lavora molto più velocemente!\n");
 }
-int main() { int scelta; char input[10]; while (1) { printf("\n╔═════════════════════════════════════════════════════════╗\n║                                                         ║\n║                     ▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄                     ║\n║                     █▒▒░░░░░░░░░▒▒█                     ║\n║                      █░░█░░░░░█░░█                      ║\n║                   ▄▄  █░░░▀█▀░░░█  ▄▄                   ║\n║                  █░░█ ▀▄░░░░░░░▄▀ █░░█                  ║\n║                        ALU 74181                        ║\n║                                                         ║\n║                     MENU PRINCIPALE                     ║\n╠═════════════════════════════════════════════════════════╣\n║   1. Operazioni Logiche (ALU 74181 - Singolo)           ║\n║   2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║\n║   3. Operazioni Algebriche                              ║\n║   4. Convertitore Binario → Decimale                    ║\n║   5. Convertitore Decimale → Binario                    ║\n║   6. ALU in Modalità PIPO (32 bit - 8x74181)            ║\n║   7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║\n║   8. Visualizza Memoria                                 ║\n║   9. Calcolo del Clock                                  ║\n║   0. Esci                                               ║\n╚═════════════════════════════════════════════════════════╝\n"); printf(">> Inserisci la tua scelta: "); fgets(input, sizeof(input), stdin); if (sscanf(input, "%d", &scelta) == 1) {} else { printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Inserisci un numero valido  ║\n║                                ║\n╚════════════════════════════════╝\n"); continue; } if (scelta == 0) { printf("Uscita dal programma...\n"); break; } else if (scelta == 1) { simula_alu_74181(); } else if (scelta == 2) { sleep(2); simula_alu_74181(); } else if (scelta == 3) { operazioni_algebriche(); } else if (scelta == 4) { char bin[33]; char risposta[3]; printf("Inserire dati manualmente? (S/N): "); scanf("%2s", risposta); risposta[0] = toupper(risposta[0]); if (risposta[0] == 'S') { printf(">> Inserisci un numero binario: "); scanf("%32s", bin); int risultato = BIN_DEC_DECODER(bin); if (risultato != -1) { printf("Risultato (decimale): %d\n", risultato); } } else { FILE *file = fopen("input_bin.txt", "r"); if (!file) { file = fopen("input_bin.txt", "w"); if (!file) { printf("ERRORE: Impossibile creare il file\n"); return 1; } fprintf(file, "Numero Binario: <0>\n"); fclose(file); printf("Creato file input_bin.txt. Compilarlo e riavviare.\n"); return 1; } char line[100]; if (!fgets(line, sizeof(line), file)) { printf("ERRORE: Formato file incompleto\n"); fclose(file); return 1; } fclose(file); if (sscanf(line, "%*[^<]<%32[^>]>", bin) != 1) { printf("ERRORE: Formato binario non trovato\n"); return 1; } int risultato = BIN_DEC_DECODER(bin); FILE *file_out = fopen("risultati_dec.txt", "w"); if (!file_out) { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║    Impossibile aprire file     ║\n║         di scrittura           ║\n║                                ║\n╚════════════════════════════════╝\n"); return 1; } fprintf(file_out, "╔═════════════════════════════════════════════╗\n║          RISULTATI CONVERTITORE             ║\n╚═════════════════════════════════════════════╝\nRisultato      = %-3d", risultato); fclose(file_out); sleep(2); } } else if (scelta == 5) { char risposta[3]; int dec; printf("Inserire dati manualmente? (S/N): "); scanf("%2s", risposta); risposta[0] = toupper(risposta[0]); if (risposta[0] == 'S') { printf(">> Inserisci un numero decimale: "); scanf("%d", &dec); printf("Risultato (binario): %s\n", DEC_BIN_CODER(dec)); } else { FILE *file = fopen("input_dec.txt", "r"); if (!file) { file = fopen("input_dec.txt", "w"); if (!file) { printf("ERRORE: Impossibile creare il file\n"); return 1; } fprintf(file, "Numero Decimale: <0>\n"); fclose(file); printf("Creato file input_dec.txt. Compilarlo e riavviare.\n"); return 1; } char line[100]; if (!fgets(line, sizeof(line), file)) { printf("ERRORE: Formato file incompleto\n"); fclose(file); return 1; } fclose(file); char buffer[33]; if (sscanf(line, "%*[^<]<%32[^>]>", buffer) != 1) { printf("ERRORE: Formato binario non trovato\n"); return 1; } dec = atoi(buffer); FILE *file_out = fopen("risultati_bin.txt", "w"); if (!file_out) { printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║    Impossibile aprire file     ║\n║         di scrittura           ║\n║                                ║\n╚════════════════════════════════╝\n"); return 1; } fprintf(file_out, "╔═════════════════════════════════════════════╗\n ║          RISULTATI CONVERTITORE             ║\n ╚═════════════════════════════════════════════╝\n Risultato      = %-16s", DEC_BIN_CODER(dec)); fclose(file_out); sleep(2); } } else if (scelta == 6) { ALU32(); } else if (scelta == 7) { sleep(2); ALU32(); } else if (scelta == 8) { stampa_memoria(); stato_memoria(); } else if (scelta == 9) { misura_ciclo_clock(); } else { printf("Scelta non valida!\n"); } sleep(2); } if (memoria != NULL) { free(memoria); memoria = NULL; printf("[INFO] Memoria liberata.\n"); } return 0; }
+int main() { 
+    int scelta; 
+    char input[10]; 
+    while (1) { 
+        printf("\n╔═════════════════════════════════════════════════════════╗\n║                                                         ║\n║                     ▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄                     ║\n║                     █▒▒░░░░░░░░░▒▒█                     ║\n║                      █░░█░░░░░█░░█                      ║\n║                   ▄▄  █░░░▀█▀░░░█  ▄▄                   ║\n║                  █░░█ ▀▄░░░░░░░▄▀ █░░█                  ║\n║                        ALU 74181                        ║\n║                                                         ║\n║                     MENU PRINCIPALE                     ║\n╠═════════════════════════════════════════════════════════╣\n║   1. Operazioni Logiche (ALU 74181 - Singolo)           ║\n║   2. Operazioni Logiche (ALU 74181 - Singolo con clock) ║\n║   3. Operazioni Algebriche                              ║\n║   4. Convertitore Binario → Decimale                    ║\n║   5. Convertitore Decimale → Binario                    ║\n║   6. ALU in Modalità PIPO (32 bit - 8x74181)            ║\n║   7. ALU in Modalità PIPO (32 bit - 8x74181 con clock)  ║\n║   8. Visualizza Memoria                                 ║\n║   9. Calcolo del Clock                                  ║\n║   0. Esci                                               ║\n╚═════════════════════════════════════════════════════════╝\n"); 
+        printf(">> Inserisci la tua scelta: "); 
+        fgets(input, sizeof(input), stdin); 
+        if (sscanf(input, "%d", &scelta) == 1) {} else { 
+            printf("╔════════════════════════════════╗\n║             ERRORE             ║\n╠════════════════════════════════╣\n║                                ║\n║   Inserisci un numero valido  ║\n║                                ║\n╚════════════════════════════════╝\n"); 
+            continue; 
+        } if (scelta == 0) { 
+            printf("Uscita dal programma...\n"); 
+            break; 
+        } else if (scelta == 1) { 
+            simula_alu_74181(); 
+        } else if (scelta == 2) { 
+            sleep(2); 
+            simula_alu_74181(); 
+        } else if (scelta == 3) { 
+            operazioni_algebriche(); 
+        } else if (scelta == 4) { 
+            char bin[33]; 
+            char risposta[3]; 
+            printf("Inserire dati manualmente? (S/N): "); 
+            scanf("%2s", risposta); 
+            risposta[0] = toupper(risposta[0]); 
+            if (risposta[0] == 'S') { 
+                printf(">> Inserisci un numero binario: "); 
+                scanf("%32s", bin); 
+                int risultato = BIN_DEC_DECODER(bin); 
+                if (risultato != -1) { 
+                    printf("Risultato (decimale): %d\n", risultato); 
+                } } else { 
+                    FILE *file = fopen("input_bin.txt", "r"); 
+                    if (!file) { 
+                        file = fopen("input_bin.txt", "w"); 
+                        if (!file) { 
+                            printf("ERRORE: Impossibile creare il file\n"); 
+                            return 1; 
+                        } 
+                        fprintf(file, "Numero Binario: <0>\n"); 
+                        fclose(file); 
+                        printf("Creato file input_bin.txt. Compilarlo e riavviare.\n"); 
+                        return 1; 
+                    } 
+                    char line[100]; 
+                    if (!fgets(line, sizeof(line), file)) { 
+                        printf("ERRORE: Formato file incompleto\n"); 
+                        fclose(file); return 1; 
+                    } 
+                    fclose(file); 
+                    if (sscanf(line, "%*[^<]<%32[^>]>", bin) != 1) { 
+                        printf("ERRORE: Formato binario non trovato\n"); 
+                        return 1; 
+                    } 
+                    int risultato = BIN_DEC_DECODER(bin); 
+                    FILE *file_out = fopen("risultati_dec.txt", "w"); 
+                    if (!file_out) { 
+                        printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║    Impossibile aprire file     ║\n║         di scrittura           ║\n║                                ║\n╚════════════════════════════════╝\n"); 
+                        return 1; 
+                    } 
+                    fprintf(file_out, "╔═════════════════════════════════════════════╗\n║          RISULTATI CONVERTITORE             ║\n╚═════════════════════════════════════════════╝\nRisultato      = %-3d", risultato); 
+                    fclose(file_out); 
+                    sleep(2); 
+                } 
+            } else if (scelta == 5) { 
+                char risposta[3]; 
+                int dec; 
+                printf("Inserire dati manualmente? (S/N): "); 
+                scanf("%2s", risposta); 
+                risposta[0] = toupper(risposta[0]); 
+                if (risposta[0] == 'S') { 
+                    printf(">> Inserisci un numero decimale: "); 
+                    scanf("%d", &dec); 
+                    printf("Risultato (binario): %s\n", DEC_BIN_CODER(dec)); 
+                } else { 
+                    FILE *file = fopen("input_dec.txt", "r"); 
+                    if (!file) { 
+                        file = fopen("input_dec.txt", "w"); 
+                        if (!file) { 
+                            printf("ERRORE: Impossibile creare il file\n"); 
+                            return 1; 
+                        } 
+                        fprintf(file, "Numero Decimale: <0>\n"); 
+                        fclose(file); 
+                        printf("Creato file input_dec.txt. Compilarlo e riavviare.\n"); 
+                        return 1; 
+                    } 
+                    char line[100]; 
+                    if (!fgets(line, sizeof(line), file)) { 
+                        printf("ERRORE: Formato file incompleto\n"); 
+                        fclose(file); 
+                        return 1; 
+                    } 
+                    fclose(file); 
+                    char buffer[33]; 
+                    if (sscanf(line, "%*[^<]<%32[^>]>", buffer) != 1) { 
+                        printf("ERRORE: Formato binario non trovato\n"); 
+                        return 1; 
+                    } 
+                    dec = atoi(buffer); 
+                    FILE *file_out = fopen("risultati_bin.txt", "w"); 
+                    if (!file_out) { 
+                        printf("╔════════════════════════════════╗\n║            ERRORE              ║\n╠════════════════════════════════╣\n║                                ║\n║    Impossibile aprire file     ║\n║         di scrittura           ║\n║                                ║\n╚════════════════════════════════╝\n"); 
+                        return 1; 
+                    } 
+                    fprintf(file_out, "╔═════════════════════════════════════════════╗\n ║          RISULTATI CONVERTITORE             ║\n ╚═════════════════════════════════════════════╝\n Risultato      = %-16s", DEC_BIN_CODER(dec)); fclose(file_out); sleep(2); } } else if (scelta == 6) { ALU32(); } else if (scelta == 7) { sleep(2); ALU32(); } else if (scelta == 8) { stampa_memoria(); stato_memoria(); } else if (scelta == 9) { misura_ciclo_clock(); } else { printf("Scelta non valida!\n"); } sleep(2); } if (memoria != NULL) { free(memoria); memoria = NULL; printf("[INFO] Memoria liberata.\n"); } return 0; }
