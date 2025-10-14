@@ -19,11 +19,10 @@ gcc main.c -o simulatore
 
 4. Utilizzo Interattivo
 All'avvio ti verrà presentato un menù principale con diverse opzioni:
-`============================`
-
-`MENU PRINCIPALE`
-
-`============================`
+```
+============================
+MENU PRINCIPALE
+============================
 [1] Inserisci operandi manualmente
 [2] Leggi da file di input
 [3] Visualizza risultati
@@ -33,4 +32,5 @@ All'avvio ti verrà presentato un menù principale con diverse opzioni:
 [7] Ripeti ultima operazione
 [8] Stampa memoria temporanea
 [9] Misura ciclo clock
-[0] Esci`
+[0] Esci
+```
