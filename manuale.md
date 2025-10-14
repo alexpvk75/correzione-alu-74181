@@ -23,14 +23,14 @@ All'avvio ti verrà presentato un menù principale con diverse opzioni:
 ============================
 MENU PRINCIPALE
 ============================
-[1] Inserisci operandi manualmente
-[2] Leggi da file di input
-[3] Visualizza risultati
-[4] Salva risultati su file
-[5] Convertitore Binario-Decimale
-[6] Simula ALU 32 bit
-[7] Ripeti ultima operazione
-[8] Stampa memoria temporanea
-[9] Misura ciclo clock
+[1] Operazioni Logiche (ALU 74181 - Singolo)
+[2] Operazioni Logiche (ALU 74181 - Singolo con clock)
+[3] Operazioni Algebriche   
+[4] Convertitore Binario → Decimale 
+[5] Convertitore Decimale → Binario 
+[6] ALU in Modalità PIPO (32 bit - 8x74181)
+[7] ALU in Modalità PIPO (32 bit - 8x74181 con clock)
+[8] Visualizza Memoria   
+[9] Calcolo del Clock  
 [0] Esci
 ```
