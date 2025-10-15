@@ -99,3 +99,7 @@ MENU PRINCIPALE
      | 0 | 1  | 1  | 1  | 1  | 1  | F = A MINUS 1 |
      > Nota: “X” indica valore indifferente
      > Nella tabella seguente, AND è indicato con il segno x, OR con il segno +, XOR con ⊕, e più e meno aritmetici utilizzando le parole PLUS e MINUS.
+
+ 5.2 Operazioni Logiche (ALU 74181 - Singolo con clock)
+ Fa lo stesso come 1mo ma con un tempo di ritardo
+ 
