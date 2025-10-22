@@ -34,7 +34,7 @@ MENU PRINCIPALE
 
 ### Istruzioni Dettagliate per Opzione
 
-| M | S3 | S2 | S1 | S0 | Cn | Operazione | 
+     | M | S3 | S2 | S1 | S0 | Cn | Operazione | 
      |---|----|----|----|----|----|------------|
      | 1 | 0  | 0  | 0  | 0  | X  | F = NOT(A)|
      | 1 | 0  | 0  | 0  | 1  | X  | F = NOT(A + B) |
