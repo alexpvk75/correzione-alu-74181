@@ -38,10 +38,15 @@ Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli log
 
 | Opzione | Nome della Funzione | Descrizione per l'Utente |
 |---------|---------------------|--------------------------|
+| 1 | Operazioni Logiche (ALU 74181 - Singolo) | Esegue la simulazione di un singolo chip ALU 74181. L'utente deve fornire manualmente i due operandi A e B (a 4 bit) e tutti i segnali di controllo (Cn, M, S0-S3) per definire l'operazione logica o aritmetica da eseguire |
+| 2 | Operazioni Logiche (ALU 74181 - Singolo con clock) | Esegue la stessa simulazione a 4 bit dell'opzione 1, ma introduce un ritardo fisso per simulare il tempo di elaborazione del circuito, utile per studi sul timing del sistema |
 | 3 | Operazioni Algebriche | Permette di usare il programma come una Calcolatrice Avanzata. Puoi inserire liste di numeri per Somma, Sottrazione, Moltiplicazione o, in modo più semplice, digitare un'intera Espressione Matematica (es. (10 + 5) * 2) per ottenere il risultato |
 | 4 | Convertitore Binario → Decimale | Converte un numero scritto in codice binario (composto solo da 0 e 1, come 1101) nel suo equivalente nel sistema numerico standard |
 | 5 | Convertitore Decimale → Binario | Converte un numero standard (decimale, es. 25) nel suo equivalente in codice binario (es. 11001) |
+| 6 | ALU in Modalità PIPO (32 bit - 8x74181) | Simula una catena di 8 chip 74181 interconnessi per creare un'unità logica e aritmetica più potente, capace di eseguire operazioni su numeri più grandi (32 bit). Richiede input binari a 32 bit e segnali di controllo |
+| 7 | ALU in Modalità PIPO (32 bit - 8x74181 con clock) | Esegue la stessa simulazione a 32 bit dell'opzione 6, ma con un ritardo di tempo fisso |
 | 8 | Visualizza Memoria | Mostra lo storico dei risultati (output) salvati dal programma dopo ogni operazione di calcolo (algebraica o ALU). Funziona come un registro delle operazioni recenti |
+| 9 | Calcolo del Clock | Misura il tempo effettivo di un ciclo di clock del processore (CPU) del computer su cui è in esecuzione il simulatore. Questo è utilizzato per calibrare e rendere più realistiche le simulazioni temporizzate (come opzioni 2 e 7]) |
 | 0 | Esci | Termina l'esecuzione del programma e chiude l'interfaccia a riga di comando |
 
 | M | S3 | S2 | S1 | S0 | Cn | Operazione | 
