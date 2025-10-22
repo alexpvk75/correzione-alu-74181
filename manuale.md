@@ -1,21 +1,21 @@
 # **Manuale Utente - Simulatore ALU 74181**
 
 ### Descrizione breve
-Questo programma simula il funzionamento di un'unità aritmetica e logica (ALU) come il chip 74181, che è il "cervello" dei computer per fare calcoli.
+Questo programma è un Simulatore di Unità Aritmetica e Logica (ALU) 74181. L'ALU è il "cervello" fondamentale di un computer, responsabile di tutte le operazioni matematiche (Aritmetica) e logiche (come AND, OR). Lo strumento è pensato principalmente per scopi didattici e per testare le funzioni logiche del chip 74181.
 
-### Come Usare il Programma
+### Istruzioni di Avvio
 
-1. Nella pagine del progetto premi tasto "Code" per creare e attivare un nuovo codespace
+1. Nella pagina del tale progetto premi il tasto "Code" per creare e attivare un nuovo ambiente di sviluppo virtuale (codespace).
 
-2. Dentro terminale del codespace
-scrivi:
-
+2. Una volta che il terminale del codespace è pronto, scrivi il seguente comando per compilare il codice sorgente C e creare il programma eseguibile:
+```
 gcc main.c -o simulatore
-
-3. Avvia il programma con
+```
+3. Avvia l'eseguibile appena creato utilizzando il seguente comando:
+```
 ./simulatore
-
-4. All'avvio ti verrà presentato un menù principale con diverse opzioni:
+```
+4. All'avvio, ti verrà presentato il Menu Principale. Per selezionare un'opzione, digita il numero corrispondente e premi Invio.
 ```
 ============================
 MENU PRINCIPALE
@@ -31,21 +31,9 @@ MENU PRINCIPALE
 [9] Calcolo del Clock  
 [0] Esci
 ```
-5. Le scelte
-   5.1 Operazioni Logiche (ALU 74181 - Singolo)
-   Tale opzione esegue calcoli a 4 bit
-   Al seguito di selezione di questa opzione il programma chiederà:
-   `Inserire dati manualmente? (S/N): `
-   L'utente può scegliere modalità del inserimento dei dati scrivendo `S` per "si" oppure `N` per no (non dipende lowercase o uppercase)
-   - Inserendo manualmente -
-     Il programma chiederà i valori per i seguneti variabili:
-     ```
-     Cn - segnale di carry in
-     M - modalita (aritmetica/logica)
-     A0-A3 - i bit della variabile A a 4 bit
-     B0-B3 - i bit della variabile B a 4 bit
-     S0-S3 - i segnali di selezione del operazione
-     ```
+
+### Istruzioni Dettagliate per Opzione
+
      Sotto c'e elenco delle operazioni e seguenti risultati:
      | M | S3 | S2 | S1 | S0 | Cn | Operazione | 
      |---|----|----|----|----|----|------------|
@@ -97,9 +85,6 @@ MENU PRINCIPALE
      | 0 | 1  | 1  | 0  | 1  | 1  | F = (A+B) PLUS A |
      | 0 | 1  | 1  | 1  | 0  | 1  | F = (A+NOT(B) PLUS A |
      | 0 | 1  | 1  | 1  | 1  | 1  | F = A MINUS 1 |
+
      > Nota: “X” indica valore indifferente
      > Nella tabella seguente, AND è indicato con il segno x, OR con il segno +, XOR con ⊕, e più e meno aritmetici utilizzando le parole PLUS e MINUS.
-
- 5.2 Operazioni Logiche (ALU 74181 - Singolo con clock)
- Fa lo stesso come 1mo ma con un tempo di ritardo
- 
