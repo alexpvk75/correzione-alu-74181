@@ -51,6 +51,7 @@ Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli log
 
 ### Istruzioni Dettagliate per Opzione
 
+##### 1. Operazioni Logiche (ALU 74181 - Singolo)
 
 
 ### Riferimento Funzioni ALU (Opzioni 1, 2, 6, 7)
