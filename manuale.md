@@ -108,5 +108,5 @@ La seguente tabella mostra come i segnali di controllo M, Cn e S0-S3 selezionano
 | 0 | 1  | 1  | 1  | 1  | 1  | F = A MINUS 1 |
 
 
-> Nota: “X” indica valore indifferente
+> Nota: “X” indica valore indifferente 
 > Nella tabella seguente, AND è indicato come prodotto, OR con il segno +, XOR con ⊕, e più e meno aritmetici utilizzando le parole PLUS e MINUS.
