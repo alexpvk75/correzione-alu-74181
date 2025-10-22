@@ -34,8 +34,7 @@ MENU PRINCIPALE
 
 ### Istruzioni Dettagliate per Opzione
 
-     Sotto c'e elenco delle operazioni e seguenti risultati:
-     | M | S3 | S2 | S1 | S0 | Cn | Operazione | 
+| M | S3 | S2 | S1 | S0 | Cn | Operazione | 
      |---|----|----|----|----|----|------------|
      | 1 | 0  | 0  | 0  | 0  | X  | F = NOT(A)|
      | 1 | 0  | 0  | 0  | 1  | X  | F = NOT(A + B) |
@@ -85,6 +84,3 @@ MENU PRINCIPALE
      | 0 | 1  | 1  | 0  | 1  | 1  | F = (A+B) PLUS A |
      | 0 | 1  | 1  | 1  | 0  | 1  | F = (A+NOT(B) PLUS A |
      | 0 | 1  | 1  | 1  | 1  | 1  | F = A MINUS 1 |
-
-     > Nota: “X” indica valore indifferente
-     > Nella tabella seguente, AND è indicato con il segno x, OR con il segno +, XOR con ⊕, e più e meno aritmetici utilizzando le parole PLUS e MINUS.
