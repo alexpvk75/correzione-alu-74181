@@ -32,11 +32,11 @@ MENU PRINCIPALE
 [0] Esci
 ```
 
-### Istruzioni Dettagliate per Opzione
+### Descrizione delle Funzioni del Simulatore
 
 Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli logici. Le funzioni sono raggruppate in base alla loro utilità.
 
-| Opzione | Nome della Funzione | Descrizione per l'Utente |
+| Opzione | Nome della Funzione | Descrizione |
 |---------|---------------------|--------------------------|
 | 1 | Operazioni Logiche (ALU 74181 - Singolo) | Esegue la simulazione di un singolo chip ALU 74181. L'utente deve fornire manualmente i due operandi A e B (a 4 bit) e tutti i segnali di controllo (Cn, M, S0-S3) per definire l'operazione logica o aritmetica da eseguire |
 | 2 | Operazioni Logiche (ALU 74181 - Singolo con clock) | Esegue la stessa simulazione a 4 bit dell'opzione 1, ma introduce un ritardo fisso per simulare il tempo di elaborazione del circuito, utile per studi sul timing del sistema |
@@ -48,6 +48,13 @@ Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli log
 | 8 | Visualizza Memoria | Mostra lo storico dei risultati (output) salvati dal programma dopo ogni operazione di calcolo (algebraica o ALU). Funziona come un registro delle operazioni recenti |
 | 9 | Calcolo del Clock | Misura il tempo effettivo di un ciclo di clock del processore (CPU) del computer su cui è in esecuzione il simulatore. Questo è utilizzato per calibrare e rendere più realistiche le simulazioni temporizzate (come opzioni 2 e 7]) |
 | 0 | Esci | Termina l'esecuzione del programma e chiude l'interfaccia a riga di comando |
+
+### Istruzioni Dettagliate per Opzione
+
+
+
+### Riferimento Funzioni ALU (Opzioni 1, 2, 6, 7)
+La seguente tabella mostra come i segnali di controllo M, Cn e S0-S3 selezionano l'operazione eseguita.
 
 | M | S3 | S2 | S1 | S0 | Cn | Operazione | 
 |---|----|----|----|----|----|------------|
