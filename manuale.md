@@ -34,6 +34,16 @@ MENU PRINCIPALE
 
 ### Istruzioni Dettagliate per Opzione
 
+Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli logici. Le funzioni sono raggruppate in base alla loro utilità.
+
+| Opzione | Nome della Funzione | Descrizione per l'Utente |
+|---------|---------------------|--------------------------|
+| 3 | Operazioni Algebriche | Permette di usare il programma come una Calcolatrice Avanzata. Puoi inserire liste di numeri per Somma, Sottrazione, Moltiplicazione o, in modo più semplice, digitare un'intera Espressione Matematica (es. (10 + 5) * 2) per ottenere il risultato |
+| 4 | Convertitore Binario → Decimale | Converte un numero scritto in codice binario (composto solo da 0 e 1, come 1101) nel suo equivalente nel sistema numerico standard |
+| 5 | Convertitore Decimale → Binario | Converte un numero standard (decimale, es. 25) nel suo equivalente in codice binario (es. 11001) |
+| 8 | Visualizza Memoria | Mostra lo storico dei risultati (output) salvati dal programma dopo ogni operazione di calcolo (algebraica o ALU). Funziona come un registro delle operazioni recenti |
+| 0 | Esci | Termina l'esecuzione del programma e chiude l'interfaccia a riga di comando |
+
 | M | S3 | S2 | S1 | S0 | Cn | Operazione | 
 |---|----|----|----|----|----|------------|
 | 1 | 0  | 0  | 0  | 0  | X  | F = NOT(A)|
