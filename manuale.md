@@ -56,10 +56,11 @@ Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli log
 Prima il rpogramma presenta la seguente scelta:
 ```Inserire dati manualmente? (S/N): S```
 si puo rispondere con lettera S per si, o la lettera N per no (senso minuscolo o maiuscolo non importa)
-poi l'utente deve assegnare un valore 0 o 1 alle seguenti variabili:
+- Inserimento Manuale(S)
+l'utente deve assegnare un valore 0 o 1 alle seguenti variabili:
 - M - selettore di modalità(aritmetica/logica)
 - Cn - sengale Carry-in(il riporto)
-- S0-S3 - selettore di operazione [(vai a Riferimento Funzioni ALU)](#riferimento-funzioni-alu-opzioni-1-2-6-7)
+- S0-S3 - selettore di operazione [(riferimento funzioni ALU)](#riferimento-funzioni-alu-opzioni-1-2-6-7)
 - A0-A3, B0-B3 - operandi di ingresso A e B a 4 bit
 Il programma seguirà il calcolo e presenterà il risultato in questo formato:
 ```
@@ -83,6 +84,29 @@ dove
 - P: Indica che la colonna corrente propagherebbe un riporto se ricevesse un riporto in ingresso
 - G: Indica che la colonna corrente genererà un riporto in uscita, indipendentemente dal riporto in ingresso
 - A=B: Uscita che segnala se i due operandi di ingresso (A e B) sono uguali
+
+Il programma anche generà un file `risultati_alu_74181.txt` con i risultati presentati nel terminale
+
+- Inserimento tramite un file(N)
+Per utilizzare questa scelta serve il file `file input_alu.txt`. Se non c'è, lo generà il progranna.
+Nel interno del file l'utente deve compilare i seguenti campi:
+```
+Cn: <0>
+M: <0>
+A0: <0>
+B0: <0>
+A1: <0>
+B1: <0>
+A2: <0>
+B2: <0>
+A3: <0>
+B3: <0>
+S0: <0>
+S1: <0>
+S2: <0>
+S3: <0>
+```
+Dopo aver compilato il file, l'utente puo riavviare l'operazione sceglienedo Opzione 1 e inserimento tramite file (`N`), e i risultati saranno presentati sia nel menu, sia nel file `risultati_alu_74181.txt`
 
 ### Riferimento Funzioni ALU (Opzioni 1, 2, 6, 7)
 La seguente tabella mostra come i segnali di controllo M, Cn e S0-S3 selezionano l'operazione eseguita.
