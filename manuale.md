@@ -53,16 +53,27 @@ Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli log
 
 ##### 1. Operazioni Logiche (ALU 74181 - Singolo)
 
-Prima il rpogramma presenta la seguente scelta:
-```Inserire dati manualmente? (S/N): S```
-si puo rispondere con lettera S per si, o la lettera N per no (senso minuscolo o maiuscolo non importa)
-###### Inserimento Manuale(`S`)
-l'utente deve assegnare un valore 0 o 1 alle seguenti variabili:
-- M - selettore di modalità(aritmetica/logica)
-- Cn - sengale Carry-in(il riporto)
-- S0-S3 - selettore di operazione [(riferimento funzioni ALU)](#riferimento-funzioni-alu-opzioni-1-2-6-7)
-- A0-A3, B0-B3 - operandi di ingresso A e B a 4 bit
-Il programma seguirà il calcolo e presenterà il risultato in questo formato:
+**Passo 1: Selezione della Modalità di Input**
+Dopo aver selezionato l'opzione [1], il programma richiederà la modalità di inserimento dei dati:
+```Inserire dati manualmente? (S/N):```
+Rispondere con la lettera S (Sì) per l'inserimento diretto da tastiera, oppure con N (No) per la lettura dei dati da un file predefinito. La scelta non è sensibile alla distinzione tra maiuscole e minuscole.
+**Sezione A: Inserimento Manuale (S)**
+L'utente deve fornire il valore 0 o 1 per ciascuna delle seguenti variabili, nell'ordine in cui vengono richieste dal programma:
+- Cn - **Segnale di Carry-in**: Il bit di riporto (o prestito) in ingresso al circuito. Utilizzato principalmente nelle operazioni aritmetiche
+- M - **Selettore di Modalità**: Determina la natura dell'operazione. 0 per operazioni Aritmetiche (calcoli); 1 per operazioni Logiche (confronti tra bit)
+- S0-S3 - **Selettore di Operazione**: I 4 bit che, in combinazione con M e Cn, definiscono in modo univoco l'operazione da eseguire. [(Tabella di Riferimento Funzioni ALU)](#riferimento-funzioni-alu-opzioni-1-2-6-7)
+- A0-A3, B0-B3 - **Operandi di Ingresso A e B (4 bit)**: I due numeri binari a 4 cifre su cui verrà eseguita l'operazion
+
+**Output e Risultati**
+
+Una volta completato l'inserimento, il programma esegue il calcolo e presenta i risultati nel terminale in un formato strutturato.
+
+- F0-F3: Le 4 uscite del chip, che rappresentano il risultato finale a 4 bit dell'operazione eseguita.
+- Cn+4 (Carry-out): Il bit di Riporto in Uscita, generato dall'operazione.
+- A=B: Un segnale che indica se gli operandi di ingresso A e B sono uguali (1) o diversi (0).
+- P (Propagate), G (Generate): Indicatori interni utilizzati per la gestione del riporto veloce.
+
+Archiviazione: I risultati stampati nel terminale vengono anche salvati in un file denominato `risultati_alu_74181.txt` per successiva consultazione.
 ```
 ╔═══════════════════════════════════════════════╗
 ║           RISULTATI ALU 74181                 ║
