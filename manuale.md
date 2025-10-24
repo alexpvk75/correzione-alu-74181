@@ -56,7 +56,7 @@ Il simulatore offre un'insieme di strumenti avanzati per l'analisi e calcoli log
 Prima il rpogramma presenta la seguente scelta:
 ```Inserire dati manualmente? (S/N): S```
 si puo rispondere con lettera S per si, o la lettera N per no (senso minuscolo o maiuscolo non importa)
-- Inserimento Manuale(S)
+###### Inserimento Manuale(`S`)
 l'utente deve assegnare un valore 0 o 1 alle seguenti variabili:
 - M - selettore di modalità(aritmetica/logica)
 - Cn - sengale Carry-in(il riporto)
@@ -87,7 +87,7 @@ dove
 
 Il programma anche generà un file `risultati_alu_74181.txt` con i risultati presentati nel terminale
 
-- Inserimento tramite un file(N)
+###### Inserimento tramite un file(`N`)
 Per utilizzare questa scelta serve il file `file input_alu.txt`. Se non c'è, lo generà il progranna.
 Nel interno del file l'utente deve compilare i seguenti campi:
 ```
